@@ -22,16 +22,15 @@ function fill_board() {
 	
 }
 
-function fill_board_by_data(data,x,y) {
+function fill_board_by_data(data) {
 	for(var i=0;i<data.length;i++) {
 		var o = data[i];
-		var id = '#square_'+ o.x +'_' + o.y;
-		var c = o.Bcolor;
+		var id = '#square_'+ o.X + '_' + o.Y;
 		if (o.Bcolor == 'r') { 
 			var im ='<img class="piece" src="images/B.png">'; 
 		} else if (o.Bcolor == 'g') {
-			var im = c;
-		}	
+			var im = '<img class="piece" src="images/W.png">'; 
+		}
 		$(id).addClass(o.Bcolor+'_square').html(im);
 		
 	}
