@@ -18,7 +18,7 @@
 	<div id='nmm_board'>
 	</div>
 	<div>
-		<button id='nmm_reset' class='btn btn-primary'>ΕΝΑΡΞΗ</button><br>
+	<button id='nmm_reset' class='btn btn-primary'>ΕΝΑΡΞΗ</button><br>
     </div>
 </body>
 </html>
