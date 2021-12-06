@@ -5,7 +5,7 @@ ini_set('display_errors','on' );
 require_once "lib/dbconnect.php";
 require_once "lib/board.php";
 require_once "lib/game.php";
-
+require_once "lib/users.php";
 
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['PATH_INFO'],'/'));
@@ -25,7 +25,7 @@ switch ($r=array_shift($request)) {
             }
             break;
     case 'status': 
-			if(sizeof($request)==0) {handle_status($method);}
+			if(sizeof($request)==0) {show_status();}
 			else {header("HTTP/1.1 404 Not Found");}
 			break;
 	case 'players': handle_player($method, $request,$input);
@@ -68,6 +68,14 @@ function handle_player($method, $request,$input) {
 				 print json_encode(['errormesg'=>"Player $b not found."]);
                  break;
 	}
+}
+
+function handle_status($method) {
+    if($method=='GET') {
+        show_status();
+    } else {
+        header('HTTP/1.1 405 Method Not Allowed');
+    }
 }
 
 ?>

@@ -1,4 +1,4 @@
-var me={token:null,Bcolor:null};
+var me={token:null,color:null};
 var game_status={};
 var board={};
 var last_update=new Date().getTime();
@@ -7,6 +7,7 @@ var timer=null;
 $(function () {
 	draw_empty_board();
 	fill_board();
+	game_status_update();
 	$('#nmm_login').click( login_to_game);
 	$('#nmm_reset').click( reset_board);
 	
@@ -41,7 +42,7 @@ function reset_board() {
 function fill_board_by_data(data,y,z) {
 	for(var i=0;i<data.length;i++) {
 		var o = data[i];
-		var id = '#square_'+ o.x + '_' + o.y;
+		var id = '#square_'+ o.X + '_' + o.Y;
 		if (o.Bcolor == 'r') { 
 			var im ='<img class="piece" src="images/B.png">'; 
 		} else if (o.Bcolor == 'g') {
@@ -66,7 +67,7 @@ function login_to_game() {
 			dataType: "json",
 			headers: {"X-Token": me.token},
 			contentType: 'application/json',
-			data: JSON.stringify( {username: $('#username').val(), color: p_color}),
+			data: JSON.stringify( {username: $('#username').val(), Bcolor: p_color}),
 			success: login_result,
 			error: login_error});
 }

@@ -1,4 +1,4 @@
-var me={token:null,Bcolor:null};
+var me={token:null,color:null};
 var game_status={};
 var board={};
 var last_update=new Date().getTime();
@@ -7,6 +7,7 @@ var timer=null;
 $(function () {
 	draw_empty_board();
 	fill_board();
+	game_status_update();
 	$('#nmm_login').click( login_to_game);
 	$('#nmm_reset').click( reset_board);
 	
