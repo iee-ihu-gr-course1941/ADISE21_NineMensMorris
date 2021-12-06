@@ -11,7 +11,7 @@ function show_users() {
 }
 function show_user($b) {
 	global $mysqli;
-	$sql = 'select username,color from players where color=?';
+	$sql = 'select username , color from players where color=?';
 	$st = $mysqli->prepare($sql);
 	$st->bind_param('s',$b);
 	$st->execute();

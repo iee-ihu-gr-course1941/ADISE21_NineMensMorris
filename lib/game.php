@@ -73,10 +73,10 @@ function update_game_status() {
 				break;
 	}
 
-	$sql = 'update game_status set gamestatus=?, p_turn=?'
-	$st = $mysqli->prepare($sql);
-	$st->bind_param('ss',$new_status,$new_turn);
-	$st->execute();
+	//$sql = 'update game_status set gamestatus=?, p_turn=?'
+	//$st = $mysqli->prepare($sql);
+	//$st->bind_param('ss',$new_status,$new_turn);
+	//$st->execute();
 	
 	
 	
