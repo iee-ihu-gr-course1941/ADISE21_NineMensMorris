@@ -22,7 +22,7 @@ function fill_board() {
 	
 }
 
-function fill_board_by_data(data) {
+function fill_board_by_data(data,y,z) {
 	for(var i=0;i<data.length;i++) {
 		var o = data[i];
 		var id = '#square_'+ o.X + '_' + o.Y;
