@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2021 at 03:29 PM
+-- Generation Time: Dec 06, 2021 at 06:10 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -208,7 +208,7 @@ CREATE TABLE `players` (
 --
 
 INSERT INTO `players` (`username`, `color`, `token`, `last_action`) VALUES
-('kyuubi', '', NULL, NULL);
+('kyuubi', 'W', NULL, NULL);
 
 --
 -- Indexes for dumped tables
