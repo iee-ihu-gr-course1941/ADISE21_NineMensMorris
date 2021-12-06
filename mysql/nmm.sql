@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2021 at 06:33 PM
+-- Generation Time: Dec 06, 2021 at 03:29 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -25,7 +25,7 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `clean_board` ()  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_board` ()  BEGIN 
 REPLACE INTO board SELECT * FROM boardempty;
 END$$
 
@@ -175,8 +175,8 @@ INSERT INTO `boardempty` (`x`, `y`, `color`, `Bcolor`) VALUES
 
 CREATE TABLE `game_status` (
   `gamestatus` enum('not_active','initialized','started','ended','aborded') COLLATE utf8_bin NOT NULL DEFAULT 'not_active',
-  `p_turn` enum('w','b') COLLATE utf8_bin DEFAULT NULL,
-  `result` enum('b','w','d') COLLATE utf8_bin DEFAULT NULL,
+  `p_turn` enum('W','B') COLLATE utf8_bin DEFAULT NULL,
+  `result` enum('W','B','D') COLLATE utf8_bin DEFAULT NULL,
   `last_change` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -198,8 +198,17 @@ DELIMITER ;
 
 CREATE TABLE `players` (
   `username` varchar(20) COLLATE utf8_bin DEFAULT NULL,
-  `color` enum('b','w') COLLATE utf8_bin NOT NULL
+  `color` enum('B','W') COLLATE utf8_bin NOT NULL,
+  `token` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+  `last_action` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `players`
+--
+
+INSERT INTO `players` (`username`, `color`, `token`, `last_action`) VALUES
+('kyuubi', '', NULL, NULL);
 
 --
 -- Indexes for dumped tables

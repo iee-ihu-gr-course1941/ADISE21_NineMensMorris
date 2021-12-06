@@ -50,7 +50,7 @@ function update_game_status() {
 		$sql = "UPDATE players SET username=NULL, token=NULL WHERE last_action< (NOW() - INTERVAL 15 MINUTE)";
 		$st2 = $mysqli->prepare($sql);
 		$st2->execute();
-		if($status['gamestatus']=='started') {
+		if($status['status']=='started') {
 			$new_status='aborted';
 		}
 	}
@@ -73,7 +73,7 @@ function update_game_status() {
 				break;
 	}
 
-	$sql = 'update game_status set gamestatus=?, p_turn=?'
+	$sql = 'update game_status set status=?, p_turn=?'
 	$st = $mysqli->prepare($sql);
 	$st->bind_param('ss',$new_status,$new_turn);
 	$st->execute();
