@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 06, 2021 at 06:10 PM
+-- Generation Time: Dec 07, 2021 at 06:25 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -40,7 +40,7 @@ DELIMITER ;
 CREATE TABLE `board` (
   `X` tinyint(1) NOT NULL,
   `Y` tinyint(1) NOT NULL,
-  `COLOR` enum('w','b') COLLATE utf8_bin DEFAULT NULL,
+  `color` enum('w','b') COLLATE utf8_bin DEFAULT NULL,
   `Bcolor` enum('g','r') COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -48,7 +48,7 @@ CREATE TABLE `board` (
 -- Dumping data for table `board`
 --
 
-INSERT INTO `board` (`X`, `Y`, `COLOR`, `Bcolor`) VALUES
+INSERT INTO `board` (`X`, `Y`, `color`, `Bcolor`) VALUES
 (1, 1, NULL, 'g'),
 (1, 2, NULL, 'r'),
 (1, 3, NULL, 'r'),
@@ -106,8 +106,8 @@ INSERT INTO `board` (`X`, `Y`, `COLOR`, `Bcolor`) VALUES
 --
 
 CREATE TABLE `boardempty` (
-  `x` tinyint(1) NOT NULL,
-  `y` tinyint(1) NOT NULL,
+  `X` tinyint(1) NOT NULL,
+  `Y` tinyint(1) NOT NULL,
   `color` enum('w','b') COLLATE utf8_bin DEFAULT NULL,
   `Bcolor` enum('g','r') COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -116,7 +116,7 @@ CREATE TABLE `boardempty` (
 -- Dumping data for table `boardempty`
 --
 
-INSERT INTO `boardempty` (`x`, `y`, `color`, `Bcolor`) VALUES
+INSERT INTO `boardempty` (`X`, `Y`, `color`, `Bcolor`) VALUES
 (1, 1, NULL, 'g'),
 (1, 2, NULL, 'r'),
 (1, 3, NULL, 'r'),
@@ -174,7 +174,7 @@ INSERT INTO `boardempty` (`x`, `y`, `color`, `Bcolor`) VALUES
 --
 
 CREATE TABLE `game_status` (
-  `gamestatus` enum('not_active','initialized','started','ended','aborded') COLLATE utf8_bin NOT NULL DEFAULT 'not_active',
+  `status` enum('not_active','initialized','started','ended','aborded') COLLATE utf8_bin NOT NULL DEFAULT 'not_active',
   `p_turn` enum('W','B') COLLATE utf8_bin DEFAULT NULL,
   `result` enum('W','B','D') COLLATE utf8_bin DEFAULT NULL,
   `last_change` timestamp NULL DEFAULT NULL
@@ -224,7 +224,7 @@ ALTER TABLE `board`
 -- Indexes for table `boardempty`
 --
 ALTER TABLE `boardempty`
-  ADD PRIMARY KEY (`x`,`y`);
+  ADD PRIMARY KEY (`X`,`Y`);
 
 --
 -- Indexes for table `players`

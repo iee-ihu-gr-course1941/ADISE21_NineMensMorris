@@ -1,15 +1,16 @@
-var me={token:null,color:null};
+//var me={token:null,color:null};
+var me ={};
 var game_status={};
-var board={};
-var last_update=new Date().getTime();
-var timer=null;
+//var board={};
+//var last_update=new Date().getTime();
+//var timer=null;
 
 $(function () {
 	draw_empty_board();
 	fill_board();
-	game_status_update();
+	//game_status_update();
 	$('#nmm_login').click( login_to_game);
-	$('#nmm_reset').click( reset_board);
+	//$('#nmm_reset').click( reset_board);
 	
 });
 
@@ -25,7 +26,6 @@ function draw_empty_board(p) {
 	t+='</table>';
 	
 	$('#nmm_board').html(t);
-	
 }
 
 function fill_board() {
@@ -33,11 +33,11 @@ function fill_board() {
 	
 }
 
-function reset_board() {
-	$.ajax({url: "ninemenmorris.php/board/", headers: {"X-Token": me.token}, method: 'POST',  success: fill_board_by_data });
-	$('#move_div').hide();
-	$('#game_initializer').show(2000);
-}
+//function reset_board() {
+//	$.ajax({url: "ninemenmorris.php/board/", headers: {"X-Token": me.token}, method: 'POST',  success: fill_board_by_data });
+//	$('#move_div').hide();
+//	$('#game_initializer').show(2000);
+//}
 
 function fill_board_by_data(data,y,z) {
 	for(var i=0;i<data.length;i++) {
@@ -86,28 +86,28 @@ function login_error(data,y,z,c) {
 
 function game_status_update() {
 	
-	clearTimeout(timer);
-	$.ajax({url: "NineMenMorris.php/status/", success: update_status,headers: {"X-Token": me.token} });
+	//clearTimeout(timer);
+	$.ajax({url: "NineMenMorris.php/status/", success: update_status });
 }
 
 function update_status(data) {
-	last_update=new Date().getTime();
-	var game_stat_old = game_status;
+	//last_update=new Date().getTime();
+	//var game_stat_old = game_status;
 	game_status=data[0];
 	update_info();
-	clearTimeout(timer);
+	//clearTimeout(timer);
 	if(game_status.p_turn==me.color &&  me.color!=null) {
 		x=0;
 		// do play
-		if(game_stat_old.p_turn!=game_status.p_turn) {
-			fill_board();
-		}
+		//if(game_stat_old.p_turn!=game_status.p_turn) {
+		//	fill_board();
+		//}
 		$('#move_div').show(1000);
-		timer=setTimeout(function() { game_status_update();}, 15000);
+		setTimeout(function() { game_status_update();}, 15000);
 	} else {
 		// must wait for something
 		$('#move_div').hide(1000);
-		timer=setTimeout(function() { game_status_update();}, 4000);
+		setTimeout(function() { game_status_update();}, 4000);
 	}
  	
 }

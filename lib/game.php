@@ -15,15 +15,27 @@ function show_status() {
 
 }
 
-function check_abort() {
-	global $mysqli;
+//function check_abort() {
+//	global $mysqli;
 	
-	$sql = "update game_status set gamestatus='aborded', result=if(p_turn='W','B','W'),p_turn=null where p_turn is not null and last_change<(now()-INTERVAL 5 MINUTE) and status='started'";
-	$st = $mysqli->prepare($sql);
-	$r = $st->execute();
-}
+//	$sql = "update game_status set status='aborded', result=if(p_turn='W','B','W'),p_turn=null where p_turn is not null and last_change<(now()-INTERVAL 5 MINUTE) and status='started'";
+//	$st = $mysqli->prepare($sql);
+//	$r = $st->execute();
+//}
 
-function read_status() {
+//function read_status() {
+//	global $mysqli;
+	
+//	$sql = 'select * from game_status';
+//	$st = $mysqli->prepare($sql);
+
+//	$st->execute();
+//	$res = $st->get_result();
+//	$status = $res->fetch_assoc();
+//	return($status);
+//}
+
+function update_game_status() {
 	global $mysqli;
 	
 	$sql = 'select * from game_status';
@@ -32,25 +44,20 @@ function read_status() {
 	$st->execute();
 	$res = $st->get_result();
 	$status = $res->fetch_assoc();
-	return($status);
-}
-
-function update_game_status() {
-	global $mysqli;
-
-	$status = read_status();
+	
+	
 	$new_status=null;
 	$new_turn=null;
 	
-	$st3=$mysqli->prepare('select count(*) as aborted from players WHERE last_action< (NOW() - INTERVAL 15 MINUTE)');
+	$st3=$mysqli->prepare('select count(*) as aborted from players WHERE last_action< (NOW() - INTERVAL 5 MINUTE)');
 	$st3->execute();
 	$res3 = $st3->get_result();
 	$aborted = $res3->fetch_assoc()['aborted'];
 	if($aborted>0) {
-		$sql = "UPDATE players SET username=NULL, token=NULL WHERE last_action< (NOW() - INTERVAL 15 MINUTE)";
+		$sql = "UPDATE players SET username=NULL, token=NULL WHERE last_action< (NOW() - INTERVAL 5 MINUTE)";
 		$st2 = $mysqli->prepare($sql);
 		$st2->execute();
-		if($status['gamestatus']=='started') {
+		if($status['status']=='started') {
 			$new_status='aborted';
 		}
 	}
@@ -73,10 +80,10 @@ function update_game_status() {
 				break;
 	}
 
-	//$sql = 'update game_status set gamestatus=?, p_turn=?'
-	//$st = $mysqli->prepare($sql);
-	//$st->bind_param('ss',$new_status,$new_turn);
-	//$st->execute();
+	$sql = 'update game_status set status=?, p_turn=?';
+	$st = $mysqli->prepare($sql);
+	$st->bind_param('ss',$new_status,$new_turn);
+	$st->execute();
 	
 	
 	

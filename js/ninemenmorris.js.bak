@@ -1,23 +1,30 @@
-var me={token:null,color:null};
+//var me={token:null,color:null};
+var me ={};
 var game_status={};
-var board={};
-var last_update=new Date().getTime();
-var timer=null;
+//var board={};
+//var last_update=new Date().getTime();
+//var timer=null;
 
 $(function () {
 	draw_empty_board();
 	fill_board();
-	game_status_update();
+	//game_status_update();
 	$('#nmm_login').click( login_to_game);
-	$('#nmm_reset').click( reset_board);
+	//$('#nmm_reset').click( reset_board);
 	
 });
 
 function draw_empty_board(p) {
+	if(p!='B') {p='W';}
+	var draw_init = {
+		'W': {i1:6,i2:0,istep:-1,j1:1,j2:7,jstep:1},
+		'B': {i1:1,i2:7,istep:1, j1:6,j2:0,jstep:-1}
+	};
+	var s=draw_init[p];
 	var t='<table id="nmm_table">';
-	for(var i=7;i>0;i--) {
+	for(var i=s.i1;i!=s.i2;i+=s.istep) {
 		t += '<tr>';
-		for(var j=1;j<8;j++) {
+		for(var j=s.j1;j!=s.j2;j+=s.jstep) {
 			t += '<td class="nmm_square" id="square_'+j+'_'+i+'">' + j +','+i+'</td>'; 
 		}
 		t+='</tr>';
@@ -25,7 +32,6 @@ function draw_empty_board(p) {
 	t+='</table>';
 	
 	$('#nmm_board').html(t);
-	
 }
 
 function fill_board() {
@@ -33,11 +39,11 @@ function fill_board() {
 	
 }
 
-function reset_board() {
-	$.ajax({url: "ninemenmorris.php/board/", headers: {"X-Token": me.token}, method: 'POST',  success: fill_board_by_data });
-	$('#move_div').hide();
-	$('#game_initializer').show(2000);
-}
+//function reset_board() {
+//	$.ajax({url: "ninemenmorris.php/board/", headers: {"X-Token": me.token}, method: 'POST',  success: fill_board_by_data });
+//	$('#move_div').hide();
+//	$('#game_initializer').show(2000);
+//}
 
 function fill_board_by_data(data,y,z) {
 	for(var i=0;i<data.length;i++) {
@@ -67,7 +73,7 @@ function login_to_game() {
 			dataType: "json",
 			headers: {"X-Token": me.token},
 			contentType: 'application/json',
-			data: JSON.stringify( {username: $('#username').val(), Bcolor: p_color}),
+			data: JSON.stringify( {username: $('#username').val(), color: p_color}),
 			success: login_result,
 			error: login_error});
 }
@@ -86,28 +92,28 @@ function login_error(data,y,z,c) {
 
 function game_status_update() {
 	
-	clearTimeout(timer);
-	$.ajax({url: "NineMenMorris.php/status/", success: update_status,headers: {"X-Token": me.token} });
+	//clearTimeout(timer);
+	$.ajax({url: "NineMenMorris.php/status/", success: update_status });
 }
 
 function update_status(data) {
-	last_update=new Date().getTime();
-	var game_stat_old = game_status;
+	//last_update=new Date().getTime();
+	//var game_stat_old = game_status;
 	game_status=data[0];
 	update_info();
-	clearTimeout(timer);
+	//clearTimeout(timer);
 	if(game_status.p_turn==me.color &&  me.color!=null) {
 		x=0;
 		// do play
-		if(game_stat_old.p_turn!=game_status.p_turn) {
-			fill_board();
-		}
+		//if(game_stat_old.p_turn!=game_status.p_turn) {
+		//	fill_board();
+		//}
 		$('#move_div').show(1000);
-		timer=setTimeout(function() { game_status_update();}, 15000);
+		setTimeout(function() { game_status_update();}, 15000);
 	} else {
 		// must wait for something
 		$('#move_div').hide(1000);
-		timer=setTimeout(function() { game_status_update();}, 4000);
+		setTimeout(function() { game_status_update();}, 4000);
 	}
  	
 }

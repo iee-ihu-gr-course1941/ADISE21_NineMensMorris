@@ -22,7 +22,7 @@ function show_user($b) {
 
 function set_user($b,$input) {
 	//print_r($input);
-	if(!isset($input['username'])) {
+	if(!isset($input['username']) || $input['username']=='') {
 		header("HTTP/1.1 400 Bad Request");
 		print json_encode(['errormesg'=>"No username given."]);
 		exit;
@@ -67,20 +67,20 @@ function handle_user($method, $b,$input) {
     }
 }
 
-function current_color($token) {
+//function current_color($token) {
 	
-	global $mysqli;
-	if($token==null) {return(null);}
-	$sql = 'select * from players where token=?';
-	$st = $mysqli->prepare($sql);
-	$st->bind_param('s',$token);
-	$st->execute();
-	$res = $st->get_result();
-	if($row=$res->fetch_assoc()) {
-		return($row['color']);
-	}
-	return(null);
-}
+//	global $mysqli;
+//	if($token==null) {return(null);}
+//	$sql = 'select * from players where token=?';
+//	$st = $mysqli->prepare($sql);
+//	$st->bind_param('s',$token);
+//	$st->execute();
+//	$res = $st->get_result();
+//	if($row=$res->fetch_assoc()) {
+//		return($row['color']);
+//	}
+//	return(null);
+//}
 
 
 ?>
