@@ -44,11 +44,11 @@ function fill_board_by_data(data,y,z) {
 		var o = data[i];
 		var id = '#square_'+ o.X + '_' + o.Y;
 		if (o.Bcolor == 'r') { 
-			var im ='<img class="piece" src="images/B.png">'; 
+			var div ='<div class="r_square">'; 
 		} else if (o.Bcolor == 'g') {
-			var im = '<img class="piece" src="images/W.png">'; 
+			var div = '<div class="g_square">'; 
 		}
-		$(id).addClass(o.Bcolor+'_square').html(im);
+		$(id).addClass(o.Bcolor+'_square').html(div);
 		
 	}
 }
