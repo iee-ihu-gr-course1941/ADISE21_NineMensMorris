@@ -72,5 +72,4 @@ div.g_square{
 	left: 830px;
 	font-family: "Times New Roman", Times, serif;
 	color: mediumseagreen;
-	outline: solid;
 }

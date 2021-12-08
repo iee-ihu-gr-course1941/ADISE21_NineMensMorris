@@ -15,16 +15,10 @@ $(function () {
 });
 
 function draw_empty_board(p) {
-	if(p!='B') {p='W';}
-	var draw_init = {
-		'W': {i1:6,i2:0,istep:-1,j1:1,j2:7,jstep:1},
-		'B': {i1:1,i2:7,istep:1, j1:6,j2:0,jstep:-1}
-	};
-	var s=draw_init[p];
 	var t='<table id="nmm_table">';
-	for(var i=s.i1;i!=s.i2;i+=s.istep) {
+	for(var i=7;i>0;i--) {
 		t += '<tr>';
-		for(var j=s.j1;j!=s.j2;j+=s.jstep) {
+		for(var j=1;j<8;j++) {
 			t += '<td class="nmm_square" id="square_'+j+'_'+i+'">' + j +','+i+'</td>'; 
 		}
 		t+='</tr>';
@@ -50,11 +44,11 @@ function fill_board_by_data(data,y,z) {
 		var o = data[i];
 		var id = '#square_'+ o.X + '_' + o.Y;
 		if (o.Bcolor == 'r') { 
-			var im ='<img class="piece" src="images/B.png">'; 
+			var div ='<div class="r_square">'; 
 		} else if (o.Bcolor == 'g') {
-			var im = '<img class="piece" src="images/W.png">'; 
+			var div = '<div class="g_square">'; 
 		}
-		$(id).addClass(o.Bcolor+'_square').html(im);
+		$(id).addClass(o.Bcolor+'_square').html(div);
 		
 	}
 }

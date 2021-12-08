@@ -73,3 +73,8 @@ div.g_square{
 	font-family: "Times New Roman", Times, serif;
 	color: mediumseagreen;
 }
+
+#game_info{
+	position: relative;
+	left: 830px;
+}
