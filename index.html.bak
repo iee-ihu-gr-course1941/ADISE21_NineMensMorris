@@ -20,7 +20,7 @@
 	<br/>
 	<div id='game_initializer'>
 		<input id='username'>
-		<select>
+		<select id='pcolor'>
 		<option value='W'>W</option>
 		<option value='B'>B</option>
 		</select>
