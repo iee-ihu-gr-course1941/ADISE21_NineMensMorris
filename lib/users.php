@@ -37,7 +37,7 @@ function set_user($b,$input) {
 	$r = $res->fetch_all(MYSQLI_ASSOC);
 	if($r[0]['c']>0) {
 		header("HTTP/1.1 400 Bad Request");
-		print json_encode(['errormesg'=>"Player $b is already set. Please select another piece_color."]);
+		print json_encode(['errormesg'=>"Player $b is already set. Please select another color."]);
 		exit;
 	}
 	$sql = 'update players set username=?, token=md5(CONCAT( ?, NOW()))  where piece_color=?';
