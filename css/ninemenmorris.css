@@ -47,4 +47,29 @@ div.g_square{
     z-index: 10;
 }
 
+#nmm_login{
+	position: relative;
+	left: 0px;
+}
 
+#game_initializer{
+	position: relative;
+	left: 755px;
+}
+
+#move_div{
+	position: relative;
+	left: 700px;
+}
+
+#nmm_reset{
+	position: relative;
+	left: 900px;
+}
+
+#nmm_header{
+	position: relative;
+	left: 830px;
+	font-family: "Times New Roman", Times, serif;
+	color: mediumseagreen;
+}
