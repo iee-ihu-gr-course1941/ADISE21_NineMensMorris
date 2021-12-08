@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2021 at 06:25 PM
+-- Generation Time: Dec 08, 2021 at 06:10 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -40,7 +40,7 @@ DELIMITER ;
 CREATE TABLE `board` (
   `X` tinyint(1) NOT NULL,
   `Y` tinyint(1) NOT NULL,
-  `color` enum('w','b') COLLATE utf8_bin DEFAULT NULL,
+  `piece_color` enum('w','b') COLLATE utf8_bin DEFAULT NULL,
   `Bcolor` enum('g','r') COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -48,7 +48,7 @@ CREATE TABLE `board` (
 -- Dumping data for table `board`
 --
 
-INSERT INTO `board` (`X`, `Y`, `color`, `Bcolor`) VALUES
+INSERT INTO `board` (`X`, `Y`, `piece_color`, `Bcolor`) VALUES
 (1, 1, NULL, 'g'),
 (1, 2, NULL, 'r'),
 (1, 3, NULL, 'r'),
@@ -108,7 +108,7 @@ INSERT INTO `board` (`X`, `Y`, `color`, `Bcolor`) VALUES
 CREATE TABLE `boardempty` (
   `X` tinyint(1) NOT NULL,
   `Y` tinyint(1) NOT NULL,
-  `color` enum('w','b') COLLATE utf8_bin DEFAULT NULL,
+  `piece_color` enum('w','b') COLLATE utf8_bin DEFAULT NULL,
   `Bcolor` enum('g','r') COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -116,7 +116,7 @@ CREATE TABLE `boardempty` (
 -- Dumping data for table `boardempty`
 --
 
-INSERT INTO `boardempty` (`X`, `Y`, `color`, `Bcolor`) VALUES
+INSERT INTO `boardempty` (`X`, `Y`, `piece_color`, `Bcolor`) VALUES
 (1, 1, NULL, 'g'),
 (1, 2, NULL, 'r'),
 (1, 3, NULL, 'r'),
@@ -198,7 +198,7 @@ DELIMITER ;
 
 CREATE TABLE `players` (
   `username` varchar(20) COLLATE utf8_bin DEFAULT NULL,
-  `color` enum('B','W') COLLATE utf8_bin NOT NULL,
+  `piece_color` enum('B','W') COLLATE utf8_bin NOT NULL,
   `token` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   `last_action` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -207,7 +207,7 @@ CREATE TABLE `players` (
 -- Dumping data for table `players`
 --
 
-INSERT INTO `players` (`username`, `color`, `token`, `last_action`) VALUES
+INSERT INTO `players` (`username`, `piece_color`, `token`, `last_action`) VALUES
 ('kyuubi', 'W', NULL, NULL);
 
 --
@@ -230,7 +230,7 @@ ALTER TABLE `boardempty`
 -- Indexes for table `players`
 --
 ALTER TABLE `players`
-  ADD PRIMARY KEY (`color`);
+  ADD PRIMARY KEY (`piece_color`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
