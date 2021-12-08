@@ -8,7 +8,7 @@ var game_status={};
 $(function () {
 	draw_empty_board();
 	fill_board();
-	//game_status_update();
+	game_status_update();
 	$('#nmm_login').click( login_to_game);
 	//$('#nmm_reset').click( reset_board);
 	
