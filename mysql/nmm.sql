@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 08, 2021 at 06:10 PM
+-- Generation Time: Dec 10, 2021 at 03:56 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -40,7 +40,7 @@ DELIMITER ;
 CREATE TABLE `board` (
   `X` tinyint(1) NOT NULL,
   `Y` tinyint(1) NOT NULL,
-  `piece_color` enum('w','b') COLLATE utf8_bin DEFAULT NULL,
+  `piece_color` enum('W','B') COLLATE utf8_bin DEFAULT NULL,
   `Bcolor` enum('g','r') COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -108,7 +108,7 @@ INSERT INTO `board` (`X`, `Y`, `piece_color`, `Bcolor`) VALUES
 CREATE TABLE `boardempty` (
   `X` tinyint(1) NOT NULL,
   `Y` tinyint(1) NOT NULL,
-  `piece_color` enum('w','b') COLLATE utf8_bin DEFAULT NULL,
+  `piece_color` enum('W','B') COLLATE utf8_bin DEFAULT NULL,
   `Bcolor` enum('g','r') COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -198,17 +198,17 @@ DELIMITER ;
 
 CREATE TABLE `players` (
   `username` varchar(20) COLLATE utf8_bin DEFAULT NULL,
-  `piece_color` enum('B','W') COLLATE utf8_bin NOT NULL,
   `token` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  `last_action` timestamp NULL DEFAULT NULL
+  `last_action` timestamp NULL DEFAULT NULL,
+  `piece_color` enum('W','B') COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `players`
 --
 
-INSERT INTO `players` (`username`, `piece_color`, `token`, `last_action`) VALUES
-('kyuubi', 'W', NULL, NULL);
+INSERT INTO `players` (`username`, `token`, `last_action`, `piece_color`) VALUES
+('kyuubi', NULL, NULL, 'W');
 
 --
 -- Indexes for dumped tables
