@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2021 at 03:56 PM
+-- Generation Time: Dec 10, 2021 at 07:12 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -181,6 +181,13 @@ CREATE TABLE `game_status` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
+-- Dumping data for table `game_status`
+--
+
+INSERT INTO `game_status` (`status`, `p_turn`, `result`, `last_change`) VALUES
+('started', 'W', NULL, '2021-12-10 18:11:02');
+
+--
 -- Triggers `game_status`
 --
 DELIMITER $$
@@ -208,7 +215,8 @@ CREATE TABLE `players` (
 --
 
 INSERT INTO `players` (`username`, `token`, `last_action`, `piece_color`) VALUES
-('kyuubi', NULL, NULL, 'W');
+(NULL, NULL, NULL, 'W'),
+(NULL, NULL, NULL, 'B');
 
 --
 -- Indexes for dumped tables

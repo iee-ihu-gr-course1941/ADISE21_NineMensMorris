@@ -63,7 +63,7 @@ function login_to_game() {
 	fill_board();
 	
 	
-	$.ajax({url: "ninemenmorris.php/players/"+p_color, 
+	$.ajax({url: "NineMenMorris.php/players/"+p_color, 
 			method: 'PUT',
 			dataType: "json",
 			headers: {"X-Token": me.token},
