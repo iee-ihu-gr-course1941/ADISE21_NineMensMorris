@@ -11,7 +11,6 @@ $(function () {
 	game_status_update();
 	$('#nmm_login').click( login_to_game);
 	//$('#nmm_reset').click( reset_board);
-	alert(hello);
 	
 });
 
@@ -25,7 +24,7 @@ function draw_empty_board(p) {
 		t+='</tr>';
 	}
 	t+='</table>';
-	i = 15;
+	
 	$('#nmm_board').html(t);
 }
 

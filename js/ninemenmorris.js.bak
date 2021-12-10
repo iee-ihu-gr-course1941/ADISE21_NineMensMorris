@@ -25,7 +25,7 @@ function draw_empty_board(p) {
 		t+='</tr>';
 	}
 	t+='</table>';
-	
+	i = 15;
 	$('#nmm_board').html(t);
 }
 
