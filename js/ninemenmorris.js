@@ -11,6 +11,7 @@ $(function () {
 	game_status_update();
 	$('#nmm_login').click( login_to_game);
 	//$('#nmm_reset').click( reset_board);
+	alert(hello);
 	
 });
 
@@ -24,7 +25,7 @@ function draw_empty_board(p) {
 		t+='</tr>';
 	}
 	t+='</table>';
-	
+	i = 15;
 	$('#nmm_board').html(t);
 }
 
@@ -62,10 +63,10 @@ function login_to_game() {
 	draw_empty_board(p_color);
 	fill_board();
 	
-	$.ajax({url: "NineMenMorris.php/players/"+p_color, 
+	$.ajax({url: "chess.php/players/"+p_color, 
 			method: 'PUT',
 			dataType: "json",
-			//headers: {"X-Token": me.token},
+			headers: {"X-Token": me.token},
 			contentType: 'application/json',
 			data: JSON.stringify( {username: $('#username').val(), piece_color: p_color}),
 			success: login_result,

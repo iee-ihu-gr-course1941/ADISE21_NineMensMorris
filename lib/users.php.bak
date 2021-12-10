@@ -21,7 +21,7 @@ function show_user($b) {
 }
 
 function set_user($b,$input) {
-	print_r($input);
+	//print_r($input);
 	if(!isset($input['username']) || $input['username']=='') {
 		header("HTTP/1.1 400 Bad Request");
 		print json_encode(['errormesg'=>"No username given."]);
