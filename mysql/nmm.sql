@@ -191,9 +191,12 @@ INSERT INTO `game_status` (`status`, `p_turn`, `result`, `last_change`) VALUES
 -- Triggers `game_status`
 --
 DELIMITER $$
-CREATE TRIGGER `game_status_update` BEFORE UPDATE ON `game_status` FOR EACH ROW BEGIN 
-SET NEW.last_change = NOW();
-END
+USE `nmm`$$
+DROP TRIGGER IF EXISTS`game_status_update` $$
+CREATE TRIGGER `game_status_update` BEFORE UPDATE ON `game_status` 
+FOR EACH ROW BEGIN 
+  SET NEW.last_change = NOW();
+END;
 $$
 DELIMITER ;
 
