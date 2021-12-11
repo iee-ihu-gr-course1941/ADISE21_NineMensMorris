@@ -178,6 +178,28 @@ INSERT INTO `boardempty` (`X`, `Y`, `piece_color`, `Bcolor`) VALUES
 --
 -- Table structure for table `game_status`
 --
+--
+-- Table structure for table `players`
+--
+
+DROP TABLE IF EXISTS `players`;
+
+CREATE TABLE `players` (
+  `username` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `token` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+  `last_action` timestamp NULL DEFAULT NULL,
+  `piece_color` enum('W','B') COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`piece_color`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `players`
+--
+
+INSERT INTO `players` (`username`, `token`, `last_action`, `piece_color`) VALUES
+(NULL, NULL, NULL, 'W'),
+(NULL, NULL, NULL, 'B');
+
 
 DROP TABLE IF EXISTS `game_status`;
 
@@ -210,29 +232,10 @@ DELIMITER ;
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `players`
---
-
-DROP TABLE IF EXISTS `players`;
-
-CREATE TABLE `players` (
-  `username` varchar(20) COLLATE utf8_bin DEFAULT NULL,
-  `token` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  `last_action` timestamp NULL DEFAULT NULL,
-  `piece_color` enum('W','B') COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`piece_color`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Dumping data for table `players`
+-- Indexes for dumped tables
 --
-
-INSERT INTO `players` (`username`, `token`, `last_action`, `piece_color`) VALUES
-(NULL, NULL, NULL, 'W'),
-(NULL, NULL, NULL, 'B');
-
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
