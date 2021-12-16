@@ -36,11 +36,11 @@ switch ($r=array_shift($request)) {
 }
 
 
-function handle_board($method,$input) {
+function handle_board($method) {
     if($method=='GET') {
-            show_board($input);
+            show_board();
     } else if ($method=='POST') {
-            reset_board($input);
+            reset_board();
     } else {
         header('HTTP/1.1405 Method Not Allowed');
     }
