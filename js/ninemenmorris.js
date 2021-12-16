@@ -15,10 +15,14 @@ $(function () {
 	$('#move_div').hide();
 
 	game_status_update();
+
     $('#the_move_src').change( update_moves_selector);
 	$('#do_move2').click( do_move2);
 	//$('#nmm_login').click( login_to_game);
 	//$('#nmm_reset').click( reset_board);
+
+	$('#nmm_login').click( login_to_game);
+	$('#nmm_reset').click( reset_board);
 	
 });
 
@@ -59,6 +63,11 @@ function reset_board() {
 	$.ajax({url: "ninemenmorris.php/board/", headers: {"X-Token": me.token}, method: 'POST',  success: fill_board_by_data });
 	$('#move_div').hide();
 	$('#game_initializer').show(2000);
+
+
+	document.getElementById('username').value = '';
+	document.getElementById('username').select();
+
 }
 
 function fill_board_by_data(data) {

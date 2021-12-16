@@ -10,7 +10,7 @@ $(function () {
 	fill_board();
 	game_status_update();
 	$('#nmm_login').click( login_to_game);
-	//$('#nmm_reset').click( reset_board);
+	$('#nmm_reset').click( reset_board);
 	
 });
 
@@ -33,11 +33,11 @@ function fill_board() {
 	
 }
 
-//function reset_board() {
-//	$.ajax({url: "ninemenmorris.php/board/", headers: {"X-Token": me.token}, method: 'POST',  success: fill_board_by_data });
-//	$('#move_div').hide();
-//	$('#game_initializer').show(2000);
-//}
+function reset_board() {
+	$.ajax({url: "ninemenmorris.php/board/", headers: {"X-Token": me.token}, method: 'POST',  success: fill_board_by_data });
+	$('#move_div').hide();
+	$('#game_initializer').show(2000);
+}
 
 function fill_board_by_data(data,y,z) {
 	for(var i=0;i<data.length;i++) {
