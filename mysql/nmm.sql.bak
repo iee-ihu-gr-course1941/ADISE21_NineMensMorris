@@ -28,8 +28,6 @@ DELIMITER $$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_board` ()  BEGIN 
 REPLACE INTO board SELECT * FROM boardempty;
-UPDATE `players` SET username=null, token=null;
-UPDATE `game_status` SET `status`='not active', `p_turn`=null, `result`=null;
 END$$
 
 DELIMITER ;
@@ -222,13 +220,14 @@ INSERT INTO `game_status` (`status`, `p_turn`, `result`, `last_change`) VALUES
 --
 -- Triggers `game_status`
 --
-DROP TRIGGER IF EXISTS`game_status_update`;
-
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `game_status_update` BEFORE UPDATE ON `game_status`
+DELIMITER $$
+USE `nmm`$$
+DROP TRIGGER IF EXISTS`game_status_update` $$
+CREATE TRIGGER `game_status_update` BEFORE UPDATE ON `game_status` 
 FOR EACH ROW BEGIN 
   SET NEW.last_change = NOW();
-END;;
+END;
+$$
 DELIMITER ;
 
 -- --------------------------------------------------------

@@ -28,8 +28,6 @@ DELIMITER $$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_board` ()  BEGIN 
 REPLACE INTO board SELECT * FROM boardempty;
-UPDATE `players` SET username=NULL, token=NULL;
-UPDATE `game_status` SET `status`='not active', `p_turn`=NULL, `result`=NULL;
 END$$
 
 DELIMITER ;

@@ -22,7 +22,7 @@ $(function () {
 	//$('#nmm_reset').click( reset_board);
 
 	$('#nmm_login').click( login_to_game);
-	$('#nmm_reset').click( reset_board);
+	//$('#nmm_reset').click( reset_board);
 	
 });
 
@@ -59,6 +59,7 @@ function fill_board() {
 	
 }
 
+<<<<<<< HEAD
 function reset_board() {
 	$.ajax({url: "ninemenmorris.php/board/", headers: {"X-Token": me.token}, method: 'POST',  success: fill_board_by_data });
 	$('#move_div').hide();
@@ -69,6 +70,13 @@ function reset_board() {
 	document.getElementById('username').select();
 
 }
+=======
+//function reset_board() {
+//	$.ajax({url: "ninemenmorris.php/board/", headers: {"X-Token": me.token}, method: 'POST',  success: fill_board_by_data });
+//	$('#move_div').hide();
+//	$('#game_initializer').show(2000);
+//}
+>>>>>>> parent of 5abad88 (Reset_board fixed . + Database procedure reset_board fixed)
 
 function fill_board_by_data(data) {
 	board=data;
