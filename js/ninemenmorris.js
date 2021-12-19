@@ -11,6 +11,7 @@ $(function () {
 	game_status_update();
 	$('#nmm_login').click( login_to_game);
 	$('#nmm_reset').click( reset_board);
+	$('#first_move').click(first_move);
 	
 });
 
@@ -111,6 +112,36 @@ function update_status(data) {
 		setTimeout(function() { game_status_update();}, 4000);
 	}
  	
+}
+
+var whitePieceOffBoard = 1;
+var blackPieceOffBoard = 1;
+
+function first_move(){
+	var move = $('#the_move').val();
+
+	var cleanupMove = move.trim().split(/[ ]+/);
+
+
+	if(cleanupMove.length != 2){
+		alert('You must give 2 numbers');
+		return;
+	}
+
+	$.ajax({url: "NineMenMorris.php/board/piece/"+cleanupMove[0]+"/"+cleanupMove[1], 
+		method: 'PUT',
+		dataType: "json",
+		contentType: 'application/json',
+		data: JSON.stringify({piece: '1', piece_color: 'W'}),
+		success: move_result,
+		error: login_error});
+}
+
+
+
+
+function move_result(){
+	game_status_update();
 }
 
 function update_info(){
