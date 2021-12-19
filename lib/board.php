@@ -37,13 +37,13 @@ function reset_board() {
 	show_board();
 }
 
-// function move_piece($x,$y,$x2,$y2,$token) {
+// function move_piece($x,$y) {
 	
-// 	if($token==null || $token=='') {
-// 		header("HTTP/1.1 400 Bad Request");
-// 		print json_encode(['errormesg'=>"token is not set."]);
-// 		exit;
-// 	}
+// 	// if($token==null || $token=='') {
+// 	// 	header("HTTP/1.1 400 Bad Request");
+// 	// 	print json_encode(['errormesg'=>"token is not set."]);
+// 	// 	exit;
+// 	// }
 	
 // 	$color = current_color($token);
 // 	if($color==null ) {
