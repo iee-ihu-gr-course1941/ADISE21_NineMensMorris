@@ -59,19 +59,10 @@ function set_user($b,$input) {
 	
 }
 
-function ppiece($x,$y,$piece_color){
-	global $mysqli;
-	$sql = ' update board set piece_color=? where X=? and Y=? ';
-	$st = $mysqli->prepare($sql);
-	$st->bind_param('sss',$piece_color,$x,$y);
-	$st->execute();
-	update_game_status();
-	
-}
 
 function handle_pn($request,$b,$input){
 	global $mysqli;
-	$sql = 'select playernumber from players where piece_color=?';
+	$sql = 'select playernumber, username from players where piece_color=?';
 	$st = $mysqli->prepare($sql);
 	$st->bind_param('s',$b);
 	$st->execute();

@@ -32,14 +32,18 @@ function read_board() {
 	return($res->fetch_all(MYSQLI_ASSOC));
 }
 
-function ppiece($x,$y,$piece_color){
+function ppiece($x,$y,$piece_color,$input){
 	global $mysqli;
 	$sql = ' update board set piece_color=? where X=? and Y=? ';
 	$st = $mysqli->prepare($sql);
 	$st->bind_param('sss',$piece_color,$x,$y);
 	$st->execute();
 	
-	
+	$username=$input['username'];
+	$sql = ' update players set playerNumber = playernumber + 1 where username=? ';
+	$st3 = $mysqli->prepare($sql);
+	$st3->bind_param('s',$username);
+	$st3->execute();
 	
 	$sql = 'call `move_piece`(?,?);';
 	$st2 = $mysqli->prepare($sql);

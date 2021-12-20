@@ -55,7 +55,7 @@ function fill_board_by_data(data,x,y) {
 			im ='<img class="piece" src="images/W.png">';
 		}
 		if (o.piece_color == 'W' ){
-			im = '<img class="piece" src="images/w.png">'; 
+			im = '<img class="piece" src="images/wpawn.png">'; 
 		}else if(o.piece_color == 'B'){
 			im = '<img class="piece" src="images/bpawn.png">';
 		}
@@ -146,7 +146,7 @@ function do_premove(data) {
 	var a = s.trim().split(/[ ]+/);
 	var d = document.getElementById('square_'+a[0]+'_'+a[1]);
 	if(d.classList.contains('g_square')){
-		if( me.playerNumber == 9){
+		if( playerNumber == 9){
 			do_move();
 		}else{
 			addmove();
@@ -163,9 +163,9 @@ function addmove() {
 		alert('Must give 3 numbers');
 		return;
 	}
-	me.playerNumber += 1;
-	var im;
-	var id = '#square_'+ a[0] +'_' + a[1];
+	//me.playerNumber += 1;
+	//var im;
+	//var id = '#square_'+ a[0] +'_' + a[1];
 	//if (a[2] == 'B') { 
 	//	 im ='<img class="piece" src="images/K.png">';
 	//	me.playerNumber += 1;
@@ -178,7 +178,7 @@ function addmove() {
 			method: 'PUT',
 			dataType: "json",
 			contentType: 'application/json',
-			data: JSON.stringify( {x: a[0], y: a[1], piece_color: a[2]}),
+			data: JSON.stringify( {x: a[0], y: a[1], piece_color: a[2], username: me.username}),
 			headers: {"X-Token": me.token},
 			success: move_result,
 			error: login_error});

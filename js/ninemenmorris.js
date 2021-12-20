@@ -163,9 +163,9 @@ function addmove() {
 		alert('Must give 3 numbers');
 		return;
 	}
-	me.playerNumber += 1;
-	var im;
-	var id = '#square_'+ a[0] +'_' + a[1];
+	//me.playerNumber += 1;
+	//var im;
+	//var id = '#square_'+ a[0] +'_' + a[1];
 	//if (a[2] == 'B') { 
 	//	 im ='<img class="piece" src="images/K.png">';
 	//	me.playerNumber += 1;
@@ -178,7 +178,7 @@ function addmove() {
 			method: 'PUT',
 			dataType: "json",
 			contentType: 'application/json',
-			data: JSON.stringify( {x: a[0], y: a[1], piece_color: a[2]}),
+			data: JSON.stringify( {x: a[0], y: a[1], piece_color: a[2], username: me.username}),
 			headers: {"X-Token": me.token},
 			success: move_result,
 			error: login_error});
