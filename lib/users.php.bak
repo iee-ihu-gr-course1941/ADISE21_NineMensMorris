@@ -62,7 +62,7 @@ function set_user($b,$input) {
 
 function handle_pn($request,$b,$input){
 	global $mysqli;
-	$sql = 'select playernumber, username from players where piece_color=?';
+	$sql = 'select playernumber from players where piece_color=?';
 	$st = $mysqli->prepare($sql);
 	$st->bind_param('s',$b);
 	$st->execute();

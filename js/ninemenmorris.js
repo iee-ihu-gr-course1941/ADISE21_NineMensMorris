@@ -145,8 +145,9 @@ function do_premove(data) {
 	var s = $('#the_move').val();
 	var a = s.trim().split(/[ ]+/);
 	var d = document.getElementById('square_'+a[0]+'_'+a[1]);
+	var pnumb = data[0];
 	if(d.classList.contains('g_square')){
-		if( me.playerNumber == 9){
+		if( pnumb.playernumber == 2){
 			do_move();
 		}else{
 			addmove();
