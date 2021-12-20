@@ -147,7 +147,7 @@ function do_premove(data) {
 	var d = document.getElementById('square_'+a[0]+'_'+a[1]);
 	var pnumb = data[0];
 	if(d.classList.contains('g_square')){
-		if( pnumb.playernumber == 2){
+		if( pnumb.playernumber == 9){
 			do_move();
 		}else{
 			addmove();
