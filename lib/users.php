@@ -60,6 +60,18 @@ function set_user($b,$input) {
 }
 
 
+function handle_pn($request,$b,$input){
+	global $mysqli;
+	$sql = 'select playernumber from players where piece_color=?';
+	$st = $mysqli->prepare($sql);
+	$st->bind_param('s',$b);
+	$st->execute();
+	$res = $st->get_result();
+	header('Content-type: application/json');
+	print json_encode($res->fetch_all(MYSQLI_ASSOC), JSON_PRETTY_PRINT);
+}
+
+
 function handle_user($method, $b,$input) {
 	if($method=='GET') {
 		show_user($b);

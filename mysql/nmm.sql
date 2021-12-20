@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2021 at 07:12 PM
+-- Generation Time: Dec 18, 2021 at 09:00 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -20,16 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Database: `nmm`
 --
+DROP PROCEDURE IF EXISTS `move_piece`;
 DROP PROCEDURE IF EXISTS `reset_board`;
+
 DELIMITER $$
 --
 -- Procedures
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `move_piece` (`x1` TINYINT, `y1` TINYINT)  BEGIN
+	declare  p_color char;
+	
+	select  piece_color into  p_color FROM `board` WHERE X=x1 AND Y=y1;
+	
+	update game_status set p_turn=if(p_color='W','B','W');
+	
+    END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_board` ()  BEGIN 
+<<<<<<< Updated upstream
   REPLACE INTO board SELECT * FROM boardempty;
   update players set username=null, token=null, playerNumber=0;
   update game_status set status='not active', p_turn=null, result=null;
+=======
+REPLACE INTO board SELECT * FROM boardempty;
+update `players` set username=null, token=null, playerNumber=0;
+update `game_status` set `status`='not active', `p_turn`=null, `result`=null;
+>>>>>>> Stashed changes
 END$$
 
 DELIMITER ;
@@ -46,8 +62,7 @@ CREATE TABLE `board` (
   `Y` tinyint(1) NOT NULL,
   `piece` enum('1','2','3','4','5','6') COLLATE utf8_bin DEFAULT NULL,
   `piece_color` enum('W','B') COLLATE utf8_bin DEFAULT NULL,
-  `Bcolor` enum('g','r') COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`X`,`Y`)
+  `Bcolor` enum('g','r') COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -110,7 +125,6 @@ INSERT INTO `board` (`X`, `Y`,`piece`, `piece_color`, `Bcolor`) VALUES
 --
 -- Table structure for table `boardempty`
 --
-
 DROP TABLE IF EXISTS `boardempty`;
 
 CREATE TABLE `boardempty` (
@@ -118,8 +132,7 @@ CREATE TABLE `boardempty` (
   `Y` tinyint(1) NOT NULL,
   `piece` enum('1','2','3','4','5','6') COLLATE utf8_bin DEFAULT NULL,
   `piece_color` enum('W','B') COLLATE utf8_bin DEFAULT NULL,
-  `Bcolor` enum('g','r') COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`X`,`Y`)
+  `Bcolor` enum('g','r') COLLATE utf8_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -182,29 +195,6 @@ INSERT INTO `boardempty` (`X`, `Y`, `piece`, `piece_color`, `Bcolor`) VALUES
 --
 -- Table structure for table `game_status`
 --
---
--- Table structure for table `players`
---
-
-DROP TABLE IF EXISTS `players`;
-
-CREATE TABLE `players` (
-  `username` varchar(20) COLLATE utf8_bin DEFAULT NULL,
-  `token` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  `last_action` timestamp NULL DEFAULT NULL,
-  `piece_color` enum('W','B') COLLATE utf8_bin NOT NULL,
-  PRIMARY KEY (`piece_color`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `players`
---
-
-INSERT INTO `players` (`username`, `token`, `last_action`, `piece_color`) VALUES
-(NULL, NULL, NULL, 'W'),
-(NULL, NULL, NULL, 'B');
-
-
 DROP TABLE IF EXISTS `game_status`;
 
 CREATE TABLE `game_status` (
@@ -219,18 +209,18 @@ CREATE TABLE `game_status` (
 --
 
 INSERT INTO `game_status` (`status`, `p_turn`, `result`, `last_change`) VALUES
-('started', 'W', NULL, '2021-12-10 18:11:02');
+('started', 'W', NULL, '2021-12-18 19:50:44');
 
 --
 -- Triggers `game_status`
 --
-DROP TRIGGER IF EXISTS`game_status_update`;
+DROP TRIGGER IF EXISTS `game_status_update`;
 
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` TRIGGER `game_status_update` BEFORE UPDATE ON `game_status`
-FOR EACH ROW BEGIN 
+DELIMITER $$
+CREATE TRIGGER `game_status_update` BEFORE UPDATE ON `game_status` FOR EACH ROW BEGIN 
   SET NEW.last_change = NOW();
-END;;
+END
+$$
 DELIMITER ;
 
 
@@ -254,10 +244,49 @@ DELIMITER ;
 
 -- --------------------------------------------------------
 
+--
+-- Table structure for table `players`
+--
+DROP TABLE IF EXISTS `players`;
+
+CREATE TABLE `players` (
+  `username` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `token` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+  `last_action` timestamp NULL DEFAULT NULL,
+  `piece_color` enum('W','B') COLLATE utf8_bin NOT NULL,
+  `playerNumber` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `players`
+--
+
+INSERT INTO `players` (`username`, `token`, `last_action`, `piece_color`, `playerNumber`) VALUES
+('dsadasads', '63d3453c142e6e4292940f67ca2f4e2e', NULL, 'W', 0),
+('dasdas', '3f326aa31ed66cd9a9a18a0671610da8', NULL, 'B', 0);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `board`
+--
+ALTER TABLE `board`
+  ADD PRIMARY KEY (`X`,`Y`);
+
+--
+-- Indexes for table `boardempty`
+--
+ALTER TABLE `boardempty`
+  ADD PRIMARY KEY (`X`,`Y`);
+
+--
+-- Indexes for table `players`
+--
+ALTER TABLE `players`
+  ADD PRIMARY KEY (`piece_color`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

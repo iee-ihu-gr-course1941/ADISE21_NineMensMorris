@@ -78,3 +78,5 @@ div.g_square{
 	position: relative;
 	left: 830px;
 }
+
+IMG.piece {width: 5em; height:5em; padding:0px; margin:0px;}

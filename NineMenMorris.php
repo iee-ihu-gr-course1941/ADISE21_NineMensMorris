@@ -29,12 +29,35 @@ switch ($r=array_shift($request)) {
 			if(sizeof($request)==0) {handle_status($method);}
 			else {header("HTTP/1.1 404 Not Found");}
 			break;
+	case 'playernumber': handle_playernumber($method, $request,$input);
+			break;
+	case 'putpiece': handle_putpiece($method, $request[0],$request[1],$request[2]);
+			break;
 	case 'players': handle_player($method, $request,$input);
 			    break;
 	default:  header("HTTP/1.1 404 Not Found");
                         exit;
 }
 
+function handle_putpiece($method ,$x, $y,$piece_color){
+	if($method=='PUT'){
+		ppiece($x,$y,$piece_color);
+	}else{
+		header("HTTP/1.1 404 Not Found");
+		print json_encode(['errormesg'=>"error"]);
+	}
+}
+
+function handle_playernumber($method, $p,$input) {
+    switch ($b=array_shift($p)) {
+        case 'B': 
+		case 'W': handle_pn($method, $b,$input);
+					break;
+		default: header("HTTP/1.1 404 Not Found");
+				 print json_encode(['errormesg'=>"Player $b not found."]);
+                 break;
+	}
+}
 
 function handle_board($method) {
     if($method=='GET') {

@@ -37,6 +37,7 @@ function reset_board() {
 	show_board();
 }
 
+<<<<<<< Updated upstream
 // function move_piece($x,$y) {
 	
 // 	// if($token==null || $token=='') {
@@ -82,3 +83,34 @@ function reset_board() {
 // }
 
 ?>
+=======
+function read_board() {
+	global $mysqli;
+	$sql = 'select * from board';
+	$st = $mysqli->prepare($sql);
+	$st->execute();
+	$res = $st->get_result();
+	return($res->fetch_all(MYSQLI_ASSOC));
+}
+
+function ppiece($x,$y,$piece_color){
+	global $mysqli;
+	$sql = ' update board set piece_color=? where X=? and Y=? ';
+	$st = $mysqli->prepare($sql);
+	$st->bind_param('sss',$piece_color,$x,$y);
+	$st->execute();
+	
+	
+	
+	$sql = 'call `move_piece`(?,?);';
+	$st2 = $mysqli->prepare($sql);
+	$st2->bind_param('ii',$x,$y);
+	$st2->execute();
+	
+	header('Content-type: application/json');
+	print json_encode(read_board(), JSON_PRETTY_PRINT);
+	
+}
+
+?>
+>>>>>>> Stashed changes
