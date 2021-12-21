@@ -154,7 +154,7 @@ function do_premove(data) {
 	var pnumb = data[0];
 
 	if($(d).children().hasClass('W') || $(d).children().hasClass('B')){
-		alert("1");
+		alert("There is already a pawn in that location");
 	}
 	else if(d.classList.contains('g_square')){
 
