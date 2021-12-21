@@ -48,17 +48,23 @@ function fill_board_by_data(data,x,y) {
 		var o = data[i];
 		var id = '#square_'+ o.X +'_' + o.Y;
 		var c = o.Bcolor;
-		var im;
+		var im = document.createElement('img');
+		im.classList.add('piece');
 		if (o.Bcolor == 'r') { 
-			im ='<img class="piece" src="images/B.png">'; 
+			im.src = 'images/B.png';
 		} else if (o.Bcolor == 'g') {
-			im ='<img class="piece" src="images/W.png">';
+			im.src = 'images/W.png'
 		}
+
+
 		if (o.piece_color == 'W' ){
-			im = '<img class="piece" src="images/wpawn.png">'; 
+			im.classList.add('W');
+			im.src = 'images/wpawn.png';
 		}else if(o.piece_color == 'B'){
-			im = '<img class="piece" src="images/bpawn.png">';
+			im.classList.add('W');
+			im.src = 'images/bpawn.png';
 		}
+
 		$(id).addClass(o.Bcolor+'_square').html(im);
 		
 	}
@@ -146,8 +152,13 @@ function do_premove(data) {
 	var a = s.trim().split(/[ ]+/);
 	var d = document.getElementById('square_'+a[0]+'_'+a[1]);
 	var pnumb = data[0];
-	if(d.classList.contains('g_square')){
-		if( pnumb.playernumber == 9){
+
+	if($(d).children().hasClass('W') || $(d).children().hasClass('B')){
+		alert("1");
+	}
+	else if(d.classList.contains('g_square')){
+
+		if(pnumb.playernumber == 9){
 			do_move();
 		}else{
 			addmove();
