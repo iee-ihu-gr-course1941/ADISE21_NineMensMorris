@@ -186,6 +186,11 @@ function addmove() {
 	//	me.playerNumber += 1;
 	//}	
 	//$(id).addClass(me.Bcolor+'_square').html(im);
+	var p_color = $('#pcolor').val();
+	if(p_color != a[2]){
+		alert('Wrong Color');
+		return;
+	}
 	$.ajax({url: "ninemenmorris.php/putpiece/"+a[0]+'/'+a[1]+'/'+a[2], 
 			method: 'PUT',
 			dataType: "json",

@@ -49,20 +49,22 @@ function fill_board_by_data(data,x,y) {
 		var id = '#square_'+ o.X +'_' + o.Y;
 		var c = o.Bcolor;
 		var im = document.createElement('img');
+		im.classList.add('piece');
 		if (o.Bcolor == 'r') { 
-			im ='<img class="piece" src="images/B.png">'; 
+			im.src = 'images/B.png';
 		} else if (o.Bcolor == 'g') {
-			im ='<img class="piece" src="images/W.png">';
+			im.src = 'images/W.png'
 		}
-		if(id.classList.contains('wpawn') || o.classList.contains('bpawn'){
-			alert.('there is already a pawn');
-		}else {
-			if (o.piece_color == 'W' ){
-				im = '<img class="piece wpawn" src="images/wpawn.png">'; 
-			}else if(o.piece_color == 'B'){
-				im = '<img class="piece bpawn" src="images/bpawn.png">';
-			}
+
+
+		if (o.piece_color == 'W' ){
+			im.classList.add('W');
+			im.src = 'images/wpawn.png';
+		}else if(o.piece_color == 'B'){
+			im.classList.add('W');
+			im.src = 'images/bpawn.png';
 		}
+
 		$(id).addClass(o.Bcolor+'_square').html(im);
 		
 	}
@@ -150,8 +152,13 @@ function do_premove(data) {
 	var a = s.trim().split(/[ ]+/);
 	var d = document.getElementById('square_'+a[0]+'_'+a[1]);
 	var pnumb = data[0];
-	if(d.classList.contains('g_square')){
-		if( pnumb.playernumber == 2){
+
+	if($(d).children().hasClass('W') || $(d).children().hasClass('B')){
+		alert("There is already a pawn in that location");
+	}
+	else if(d.classList.contains('g_square')){
+
+		if(pnumb.playernumber == 9){
 			do_move();
 		}else{
 			addmove();
@@ -179,6 +186,11 @@ function addmove() {
 	//	me.playerNumber += 1;
 	//}	
 	//$(id).addClass(me.Bcolor+'_square').html(im);
+	var p_color = $('#pcolor').val();
+	if(p_color != a[2]){
+		alert(Wrong Color);
+		return;
+	}
 	$.ajax({url: "ninemenmorris.php/putpiece/"+a[0]+'/'+a[1]+'/'+a[2], 
 			method: 'PUT',
 			dataType: "json",
