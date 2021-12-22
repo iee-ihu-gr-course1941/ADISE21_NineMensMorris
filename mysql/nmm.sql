@@ -20,6 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `nmm`
 --
+DROP PROCEDURE IF EXISTS `turnupdate`;
 DROP PROCEDURE IF EXISTS `move_piece`;
 DROP PROCEDURE IF EXISTS `reset_board`;
 
@@ -27,6 +28,13 @@ DELIMITER $$
 --
 -- Procedures
 --
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `turnupdate` (`x1` char)  BEGIN
+	
+	update game_status set p_turn=if(x1='W','B','W');
+	
+    END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `move_piece` (`x1` TINYINT, `y1` TINYINT)  BEGIN
 	declare  p_color char;
 	

@@ -40,7 +40,7 @@ function ppiece($x,$y,$piece_color,$input){
 	$st->execute();
 	
 	$username=$input['username'];
-	$sql = ' update players set playerNumber = playernumber + 1 username=? ';
+	$sql = ' update players set playerNumber = playernumber + 1 where username=? ';
 	$st3 = $mysqli->prepare($sql);
 	$st3->bind_param('s',$username);
 	$st3->execute();
@@ -53,6 +53,16 @@ function ppiece($x,$y,$piece_color,$input){
 	header('Content-type: application/json');
 	print json_encode(read_board(), JSON_PRETTY_PRINT);
 	
+}
+
+function turn($x) {
+	$sql = 'call `turnupdate`(?);';
+	$st2 = $mysqli->prepare($sql);
+	$st2->bind_param('i',$x);
+	$st2->execute();
+	
+	header('Content-type: application/json');
+	print json_encode(read_board(), JSON_PRETTY_PRINT);
 }
 
 ?>

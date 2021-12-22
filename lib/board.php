@@ -55,4 +55,15 @@ function ppiece($x,$y,$piece_color,$input){
 	
 }
 
+function turn($x) {
+	global $mysqli;
+	$sql = 'call `turnupdate`(?);';
+	$st2 = $mysqli->prepare($sql);
+	$st2->bind_param('i',$x);
+	$st2->execute();
+	
+	header('Content-type: application/json');
+	print json_encode(read_board(), JSON_PRETTY_PRINT);
+}
+
 ?>

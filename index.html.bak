@@ -14,7 +14,7 @@
 	<script src="js/ninemenmorris.js"></script>
 </head>
 <body>
-    <h1>NineMenMorris</h1>
+    <h1 id='nmm_header'>NineMenMorris</h1>
 	<div id='nmm_board'>
 	</div>
 	<br/>
@@ -29,10 +29,13 @@
 	<div id='game_info'>
 	</div>
 	<div id='move_div'>
-		Δώσε κίνηση (x1 y1 x2 y2): <input id='the_move'>  <button id='do_move' class='btn btn-primary'>ΚΑΝΕ ΤΗΝ ΚΙΝΗΣΗ</button><br>
+		Δώσε κίνηση (x1 y1 color): <input id='the_move'>  <button id='do_move' class='btn btn-primary'>ΚΑΝΕ ΤΗΝ ΚΙΝΗΣΗ</button><br>
 	</div>
 
 	<br/><br/>
+	<div id='removepawn'>
+		Δώσε κίνηση για να κανεις remove καποιο enemy pawn: <input id='the_remove'> <button id='do_remove' class=btn btn-primary'> ΚΑΝΕ REMOVE </button><br>
+	</div>
 	
 	<button id='nmm_reset' class='btn btn-primary'>ΕΝΑΡΞΗ/RESET</button><br>
 </body>

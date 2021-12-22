@@ -12,6 +12,8 @@ $(function () {
 	$('#nmm_login').click( login_to_game);
 	$('#nmm_reset').click( reset_board);
 	$('#do_move').click( do_prepremove);
+	$('#removepawn').hide(1000);
+	$('#do_remove').click( removepawn2);
 	
 	
 });
@@ -115,13 +117,17 @@ function update_status(data) {
 	update_info();
 	clearTimeout(timer);
 	if(game_status.p_turn==me.piece_color &&  me.piece_color!=null) {
-		x=0;
-		// do play
-		if(game_stat_old.p_turn!=game_status.p_turn) {
-			fill_board();
+		if($('#removepawn').is(':visible')){
+			;
+		}else{
+			x=0;
+			// do play
+			if(game_stat_old.p_turn!=game_status.p_turn) {
+				fill_board();
+			}
+			$('#move_div').show(1000);
+			setTimeout(function() { game_status_update();}, 15000);
 		}
-		$('#move_div').show(1000);
-		setTimeout(function() { game_status_update();}, 15000);
 	} else {
 		// must wait for something
 		$('#move_div').hide(1000);
@@ -621,6 +627,20 @@ function no(){
 }
 	
 function removePawn(){
-	alert('remove pawn');
+	$('#removepawn').show(1000);
+	var p_color = $('#pcolor').val();
+	$.ajax({url: "ninemenmorris.php/removeturn/"+p_color, 
+			method: 'GET',
+			dataType: "json",
+			contentType: 'application/json',
+			headers: {"X-Token": me.token},
+			success: pawn});
 }
 
+function pawn(){
+	$('#move_div').hide(5000);
+}
+
+function removepawn2() {
+	;
+}

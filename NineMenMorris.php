@@ -31,12 +31,22 @@ switch ($r=array_shift($request)) {
 			break;
 	case 'playernumber': handle_playernumber($method, $request,$input);
 			break;
+	case 'removeturn': handle_removeturn($method, $request[0]);
+			break;
 	case 'putpiece': handle_putpiece($method, $request[0],$request[1],$request[2],$input);
 			break;
 	case 'players': handle_player($method, $request,$input);
 			    break;
 	default:  header("HTTP/1.1 404 Not Found");
                         exit;
+}
+
+function handle_removeturn($method,$x){
+	if($method=='GET') {
+            turn($x);
+    } else {
+        header('HTTP/1.1405 Method Not Allowed');
+    }
 }
 
 function handle_putpiece($method ,$x, $y,$piece_color,$input){
