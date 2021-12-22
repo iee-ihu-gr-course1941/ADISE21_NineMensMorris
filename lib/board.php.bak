@@ -55,7 +55,26 @@ function ppiece($x,$y,$piece_color,$input){
 	
 }
 
+function rempiece($x,$y,$piece_color,$input){
+	global $mysqli;
+	$sql = ' update board set piece_color=null where X=? and Y=? ';
+	$st = $mysqli->prepare($sql);
+	$st->bind_param('ss',$x,$y);
+	$st->execute();
+	
+	$sql = 'call `turnupdate`(?);';
+	$st2 = $mysqli->prepare($sql);
+	$st2->bind_param('i',$x);
+	$st2->execute();
+	
+	$arr = array('a' => $x, 'b' => $y, 'c' => $piece_color);
+	header('Content-type: application/json');
+	print json_encode($arr->fetc_all(MYSQLI_ASSOC), JSON_PRETTY_PRINT);
+
+}
+
 function turn($x) {
+	global $mysqli;
 	$sql = 'call `turnupdate`(?);';
 	$st2 = $mysqli->prepare($sql);
 	$st2->bind_param('i',$x);

@@ -638,9 +638,72 @@ function removePawn(){
 }
 
 function pawn(){
-	$('#move_div').hide(5000);
+	;
 }
 
 function removepawn2() {
-	;
+	var s = $('#the_remove').val();
+	var a = s.trim().split(/[ ]+/);
+	if(a.length!=3) {
+		alert('Must give 3 numbers');
+		return;
+	}
+	
+	var p_color = $('#pcolor').val();
+	if(p_color != a[2]){
+		alert('Wrong Color');
+		return;
+	}
+	$.ajax({url: "ninemenmorris.php/removepiece/"+a[0]+'/'+a[1]+'/'+a[2], 
+			method: 'PUT',
+			dataType: "json",
+			contentType: 'application/json',
+			data: JSON.stringify( {x: a[0], y: a[1], piece_color: a[2], username: me.username}),
+			headers: {"X-Token": me.token},
+			success: removesuccess,
+			error: login_error});
+}
+
+function removesuccess(data){
+	var p_color = $('#pcolor').val();
+	var d = document.getElementById('square_'+data['a']+'_'+data['b']);
+	if(d.classList.contains('g_square')){
+		if(data['c'] == 'W'){
+			if(d.childNodes[0].classList.contains('W') ){
+				alert('wrong pawn');
+				return;
+			}else if(d.childNodes[0].classList.contains('B')){
+				if(data['c'] == 'W'){
+					d.childNodes[0].classList.remove('W');
+				}else if(data['c'] == 'B'){
+					d.childNodes[0].classList.remove('B');
+				}
+			}else {
+				alert('there is no pawn there');
+			}
+		}else if(data['c'] == 'B'){
+			if(d.childNodes[0].classList.contains('B') ){
+				alert('wrong pawn');
+				return;
+			}else if(d.childNodes[0].classList.contains('W')){
+				if(data['c'] == 'W'){
+					d.childNodes[0].classList.remove('W');
+				}else if(data['c'] == 'B'){
+					d.childNodes[0].classList.remove('B');
+				}
+			}else {
+				alert('there is no pawn there');
+			}
+		}
+	}else {
+		alert('illegal pawn remove');
+		return;
+	}
+	var id = '#square_'+data['a']+'_'+data['b'];
+	var c = data['c'].c;
+	var im = document.createElement('img');
+	im.classList.add('piece');
+	im.src = 'images/W.png';
+
+	$(id).addClass(data['c'].c+'_square').html(im);
 }
