@@ -37,6 +37,8 @@ switch ($r=array_shift($request)) {
 			break;
 	case 'putpiece': handle_putpiece($method, $request[0],$request[1],$request[2],$input);
 			break;
+	case 'changeW': handle_changeW($method);
+			break;
 	case 'players': handle_player($method, $request,$input);
 			    break;
 	default:  header("HTTP/1.1 404 Not Found");
@@ -77,6 +79,14 @@ function handle_playernumber($method, $p,$input) {
 				 print json_encode(['errormesg'=>"Player $b not found."]);
                  break;
 	}
+}
+
+function handle_changeW($method){
+    if($method == 'GET'){
+        changeW();
+    }else{
+        header('HTTP/1.1405 Method Not Allowed');
+    }
 }
 
 function handle_board($method) {

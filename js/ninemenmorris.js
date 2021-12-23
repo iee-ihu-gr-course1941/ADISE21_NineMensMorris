@@ -706,4 +706,18 @@ function removesuccess(data){
 	im.src = 'images/W.png';
 
 	$(id).addClass(data['c'].c+'_square').html(im);
+
+	$('#removepawn').hide(1000);
+	
+	var p_color = $('#pcolor').val();
+	console.log(p_color);
+	
+	if(game_status.p_turn == p_color && game_status.p_turn == 'W'){
+        $.ajax({url: "ninemenmorris.php/changeW/", 
+            method: 'GET',
+            dataType: "json",
+            contentType: 'application/json',
+            headers: {"X-Token": me.token},
+            success: pawn});
+	}	
 }

@@ -34,7 +34,7 @@ function read_board() {
 
 function ppiece($x,$y,$piece_color,$input){
 	global $mysqli;
-	$sql = ' update board set piece_color=? where X=? and Y=? ';
+	$sql = 'update board set piece_color=? where X=? and Y=? ';
 	$st = $mysqli->prepare($sql);
 	$st->bind_param('sss',$piece_color,$x,$y);
 	$st->execute();
@@ -71,6 +71,16 @@ function rempiece($x,$y,$piece_color,$input){
 	header('Content-type: application/json');
 	print json_encode($arr, JSON_PRETTY_PRINT);
 
+}
+
+function changeW(){
+	global $mysqli;
+	$sql = "update game_status set p_turn='B'";
+	$st2 = $mysqli->prepare($sql);
+	$st2->execute();
+
+	header('Content-type: application/json');
+	print json_encode($arr, JSON_PRETTY_PRINT);
 }
 
 function turn($x) {
