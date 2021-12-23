@@ -39,6 +39,8 @@ switch ($r=array_shift($request)) {
 			break;
 	case 'changeW': handle_changeW($method);
 			break;
+	case 'changeB': handle_changeB($method);
+			break;
 	case 'players': handle_player($method, $request,$input);
 			    break;
 	default:  header("HTTP/1.1 404 Not Found");
@@ -84,6 +86,14 @@ function handle_playernumber($method, $p,$input) {
 function handle_changeW($method){
     if($method == 'GET'){
         changeW();
+    }else{
+        header('HTTP/1.1405 Method Not Allowed');
+    }
+}
+
+function handle_changeB($method){
+    if($method == 'GET'){
+        changeB();
     }else{
         header('HTTP/1.1405 Method Not Allowed');
     }

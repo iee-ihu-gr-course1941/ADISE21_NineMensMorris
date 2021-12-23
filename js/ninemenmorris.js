@@ -629,12 +629,23 @@ function no(){
 function removePawn(){
 	$('#removepawn').show(1000);
 	var p_color = $('#pcolor').val();
-	$.ajax({url: "ninemenmorris.php/removeturn/"+p_color, 
-			method: 'GET',
-			dataType: "json",
-			contentType: 'application/json',
-			headers: {"X-Token": me.token},
-			success: pawn});
+	if(game_status.p_turn == p_color && game_status.p_turn == 'W'){
+        $.ajax({url: "ninemenmorris.php/changeB/", 
+            method: 'GET',
+            dataType: "json",
+            contentType: 'application/json',
+            headers: {"X-Token": me.token},
+            success: pawn});
+	}
+
+	if(game_status.p_turn == p_color && game_status.p_turn == 'B'){
+        $.ajax({url: "ninemenmorris.php/changeW/", 
+            method: 'GET',
+            dataType: "json",
+            contentType: 'application/json',
+            headers: {"X-Token": me.token},
+            success: pawn});
+	}
 }
 
 function pawn(){
@@ -714,6 +725,15 @@ function removesuccess(data){
 	
 	if(game_status.p_turn == p_color && game_status.p_turn == 'W'){
         $.ajax({url: "ninemenmorris.php/changeW/", 
+            method: 'GET',
+            dataType: "json",
+            contentType: 'application/json',
+            headers: {"X-Token": me.token},
+            success: pawn});
+	}
+
+	if(game_status.p_turn == p_color && game_status.p_turn == 'B'){
+        $.ajax({url: "ninemenmorris.php/changeB/", 
             method: 'GET',
             dataType: "json",
             contentType: 'application/json',

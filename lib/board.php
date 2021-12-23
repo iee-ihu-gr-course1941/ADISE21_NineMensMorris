@@ -73,6 +73,16 @@ function rempiece($x,$y,$piece_color,$input){
 
 }
 
+function changeB(){
+	global $mysqli;
+	$sql = "update game_status set p_turn='W'";
+	$st2 = $mysqli->prepare($sql);
+	$st2->execute();
+
+	header('Content-type: application/json');
+	print json_encode(read_board(), JSON_PRETTY_PRINT);
+}
+
 function changeW(){
 	global $mysqli;
 	$sql = "update game_status set p_turn='B'";
@@ -80,7 +90,7 @@ function changeW(){
 	$st2->execute();
 
 	header('Content-type: application/json');
-	print json_encode($arr, JSON_PRETTY_PRINT);
+	print json_encode(read_board(), JSON_PRETTY_PRINT);
 }
 
 function turn($x) {

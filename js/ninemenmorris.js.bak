@@ -629,12 +629,23 @@ function no(){
 function removePawn(){
 	$('#removepawn').show(1000);
 	var p_color = $('#pcolor').val();
-	$.ajax({url: "ninemenmorris.php/removeturn/"+p_color, 
-			method: 'GET',
-			dataType: "json",
-			contentType: 'application/json',
-			headers: {"X-Token": me.token},
-			success: pawn});
+	if(game_status.p_turn == p_color && game_status.p_turn == 'W'){
+        $.ajax({url: "ninemenmorris.php/changeW/", 
+            method: 'GET',
+            dataType: "json",
+            contentType: 'application/json',
+            headers: {"X-Token": me.token},
+            success: pawn});
+	}
+
+	if(game_status.p_turn == p_color && game_status.p_turn == 'B'){
+        $.ajax({url: "ninemenmorris.php/changeB/", 
+            method: 'GET',
+            dataType: "json",
+            contentType: 'application/json',
+            headers: {"X-Token": me.token},
+            success: pawn});
+	}
 }
 
 function pawn(){
@@ -672,7 +683,7 @@ function removesuccess(data){
 			if(d.childNodes[0].classList.contains('W') ){
 				alert('wrong pawn');
 				return;
-			}else if(d.childNodes[0].classList.contains('B'){
+			}else if(d.childNodes[0].classList.contains('B')){
 				if(data['c'] == 'W'){
 					d.childNodes[0].classList.remove('W');
 				}else if(data['c'] == 'B'){
@@ -706,4 +717,27 @@ function removesuccess(data){
 	im.src = 'images/W.png';
 
 	$(id).addClass(data['c'].c+'_square').html(im);
+
+	$('#removepawn').hide(1000);
+	
+	var p_color = $('#pcolor').val();
+	console.log(p_color);
+	
+	if(game_status.p_turn == p_color && game_status.p_turn == 'W'){
+        $.ajax({url: "ninemenmorris.php/changeW/", 
+            method: 'GET',
+            dataType: "json",
+            contentType: 'application/json',
+            headers: {"X-Token": me.token},
+            success: pawn});
+	}
+
+	if(game_status.p_turn == p_color && game_status.p_turn == 'B'){
+        $.ajax({url: "ninemenmorris.php/changeB/", 
+            method: 'GET',
+            dataType: "json",
+            contentType: 'application/json',
+            headers: {"X-Token": me.token},
+            success: pawn});
+	}	
 }
