@@ -163,6 +163,7 @@ function do_premove(data) {
 		alert("There is already a pawn in that location");
 	}
 	else if(d.classList.contains('g_square')){
+		
 
 		if(pnumb.playernumber == 9){
 			do_move();
@@ -630,7 +631,7 @@ function removePawn(){
 	$('#removepawn').show(1000);
 	var p_color = $('#pcolor').val();
 	if(game_status.p_turn == p_color && game_status.p_turn == 'W'){
-        $.ajax({url: "ninemenmorris.php/changeW/", 
+        $.ajax({url: "ninemenmorris.php/changeB/", 
             method: 'GET',
             dataType: "json",
             contentType: 'application/json',
@@ -639,7 +640,7 @@ function removePawn(){
 	}
 
 	if(game_status.p_turn == p_color && game_status.p_turn == 'B'){
-        $.ajax({url: "ninemenmorris.php/changeB/", 
+        $.ajax({url: "ninemenmorris.php/changeW/", 
             method: 'GET',
             dataType: "json",
             contentType: 'application/json',
@@ -711,18 +712,19 @@ function removesuccess(data){
 		return;
 	}
 	var id = '#square_'+data['a']+'_'+data['b'];
-	var c = data['c'].c;
+	var c = data['c'];
 	var im = document.createElement('img');
 	im.classList.add('piece');
+	im.classList.remove('W');
+	im.classList.remove('B');
 	im.src = 'images/W.png';
 
-	$(id).addClass(data['c'].c+'_square').html(im);
+	$(id).addClass(data['c']+'_square').html(im);
 
 	$('#removepawn').hide(1000);
 	
 	var p_color = $('#pcolor').val();
 	console.log(p_color);
-	
 	if(game_status.p_turn == p_color && game_status.p_turn == 'W'){
         $.ajax({url: "ninemenmorris.php/changeW/", 
             method: 'GET',
@@ -739,5 +741,191 @@ function removesuccess(data){
             contentType: 'application/json',
             headers: {"X-Token": me.token},
             success: pawn});
-	}	
+	}
+	
+	var x = data['a'];
+	var y = data['b'];
+	$('#removepawn').hide(1000);
+//	if(p_color == 'W'){
+		//$('#move_div').show(1000);
+//		checktriangles(varobj, x, y);
+//	}else if(p_color == 'B'){
+		//$('#move_div').show(1000);
+//		checkbtriangles(varobj, x, y);
+//	}
+	checkWtriangles(varobj);
+	
+}
+
+function checkWtriangles(varobj){
+	for(i=1;i<=7;i++){
+		for(j=1;j<=7;j++){
+			var d = document.getElementById('square_'+i+'_'+j);
+			if(d.childNodes[0].classList.contains('W')){
+				;
+			}else if(d.childNodes[0].classList.contains('B')){
+				;
+			}else{
+				checkbtriangles(varobj, i, j);
+				checktriangles(varobj, i, j);
+			}
+		}
+	}
+}
+
+function checkbtriangles(varobj, x, y ){
+	if(x == 1 && y == 1){
+		varobj.one1 = varobj.one11;
+		varobj.one2 = varobj.one22;
+	}else if(x == 1 && y == 4){
+		varobj.one1 = varobj.one11;
+		varobj.one13 = varobj.one1313;
+	}else if(x == 1 && y == 7){
+		varobj.one1 = varobj.one11;
+		varobj.one3 = varobj.one33;
+	}else if(x == 2 && y == 2){
+		varobj.one6 = varobj.one66;
+		varobj.one5 = varobj.one55;
+	}else if(x == 2 && y == 4){
+		varobj.one6 = varobj.one66;
+		varobj.one13 = varobj.one1313;
+	}else if(x == 2 && y == 6){
+		varobj.one7 = varobj.one77;
+		varobj.one6 = varobj.one66;
+	}else if(x == 3 && y == 3){
+		varobj.one9 = varobj.one99;
+		varobj.one10 = varobj.one1010;
+	}else if(x == 3 && y == 4){
+		varobj.one10 = varobj.one1010;
+		varobj.one13 = varobj.one1313;
+	}else if(x == 3 && y == 5){
+		varobj.one11 = varobj.one1111;
+		varobj.one10 = varobj.one1010;
+	}else if(x == 4 && y == 1){
+		varobj.one15 = varobj.one1515;
+		varobj.one2 = varobj.one22;
+	}else if(x == 4 && y == 2){
+		varobj.one5 = varobj.one55;
+		varobj.one15 = varobj.one1515;
+	}else if(x == 4 && y == 3){
+		varobj.one9 = varobj.one99;
+		varobj.one15 = varobj.one1515;
+	}else if(x == 4 && y == 5){
+		varobj.one11 = varobj.one11;
+		varobj.one16 = varobj.one1616;
+	}else if(x == 4 && y == 6){
+		varobj.one7 = varobj.one77;
+		varobj.one16 = varobj.one1616;
+	}else if(x == 4 && y == 7){
+		varobj.one3 = varobj.one33;
+		varobj.one16 = varobj.one1616;
+	}else if(x == 5 && y == 3){
+		varobj.one12 = varobj.one1212;
+		varobj.one9 = varobj.one99;
+	}else if(x == 5 && y == 4){
+		varobj.one12 = varobj.one1212;
+		varobj.one14 = varobj.one1414;
+	}else if(x == 5 && y == 5){
+		varobj.one12 = varobj.one1212;
+		varobj.one11 = varobj.one1111;
+	}else if(x == 6 && y == 2){
+		varobj.one8 = varobj.one88;
+		varobj.one5 = varobj.one55;
+	}else if(x == 6 && y == 4){
+		varobj.one8 = varobj.one88;
+		varobj.one14 = varobj.one1414;
+	}else if(x == 6 && y == 6){
+		varobj.one8 = varobj.one88;
+		varobj.one7 = varobj.one77;
+	}else if(x == 7 && y == 1){
+		varobj.one4 = varobj.one44;
+		varobj.one2 = varobj.one22;
+	}else if(x == 7 && y == 4){
+		varobj.one4 = varobj.one44;
+		varobj.one14 = varobj.one1414;
+	}else if(x == 7 && y == 7){
+		varobj.one4 = varobj.one44;
+		varobj.one3 = varobj.one33;
+	}
+	
+	game_status_update();
+}
+
+function checktriangles(varobj, x, y){
+	if(x == 1 && y == 1){
+		varobj.bone1 = varobj.bone11;
+		varobj.bone2 = varobj.bone22;
+	}else if(x == 1 && y == 4){
+		varobj.bone1 = varobj.bone11;
+		varobj.bone13 = varobj.bone1313;
+	}else if(x == 1 && y == 7){
+		varobj.bone1 = varobj.bone11;
+		varobj.bone3 = varobj.bone33;
+	}else if(x == 2 && y == 2){
+		varobj.bone6 = varobj.bone66;
+		varobj.bone5 = varobj.bone55;
+	}else if(x == 2 && y == 4){
+		varobj.bone6 = varobj.bone66;
+		varobj.bone13 = varobj.bone1313;
+	}else if(x == 2 && y == 6){
+		varobj.bone7 = varobj.bone77;
+		varobj.bone6 = varobj.bone66;
+	}else if(x == 3 && y == 3){
+		varobj.bone9 = varobj.bone99;
+		varobj.bone10 = varobj.bone1010;
+	}else if(x == 3 && y == 4){
+		varobj.bone10 = varobj.bone1010;
+		varobj.bone13 = varobj.bone1313;
+	}else if(x == 3 && y == 5){
+		varobj.bone11 = varobj.bone1111;
+		varobj.bone10 = varobj.bone1010;
+	}else if(x == 4 && y == 1){
+		varobj.bone15 = varobj.bone1515;
+		varobj.bone2 = varobj.bone22;
+	}else if(x == 4 && y == 2){
+		varobj.bone5 = varobj.bone55;
+		varobj.bone15 = varobj.bone1515;
+	}else if(x == 4 && y == 3){
+		varobj.bone9 = varobj.bone99;
+		varobj.bone15 = varobj.bone1515;
+	}else if(x == 4 && y == 5){
+		varobj.bone11 = varobj.bone11;
+		varobj.bone16 = varobj.bone1616;
+	}else if(x == 4 && y == 6){
+		varobj.bone7 = varobj.bone77;
+		varobj.bone16 = varobj.bone1616;
+	}else if(x == 4 && y == 7){
+		varobj.bone3 = varobj.bone33;
+		varobj.bone16 = varobj.bone1616;
+	}else if(x == 5 && y == 3){
+		varobj.bone12 = varobj.bone1212;
+		varobj.bone9 = varobj.bone99;
+	}else if(x == 5 && y == 4){
+		varobj.bone12 = varobj.bone1212;
+		varobj.bone14 = varobj.bone1414;
+	}else if(x == 5 && y == 5){
+		varobj.bone12 = varobj.bone1212;
+		varobj.bone11 = varobj.bone1111;
+	}else if(x == 6 && y == 2){
+		varobj.bone8 = varobj.bone88;
+		varobj.bone5 = varobj.bone55;
+	}else if(x == 6 && y == 4){
+		varobj.bone8 = varobj.bone88;
+		varobj.bone14 = varobj.bone1414;
+	}else if(x == 6 && y == 6){
+		varobj.bone8 = varobj.bone88;
+		varobj.bone7 = varobj.bone77;
+	}else if(x == 7 && y == 1){
+		varobj.bone4 = varobj.bone44;
+		varobj.bone2 = varobj.bone22;
+	}else if(x == 7 && y == 4){
+		varobj.bone4 = varobj.bone44;
+		varobj.bone14 = varobj.bone1414;
+	}else if(x == 7 && y == 7){
+		varobj.bone4 = varobj.bone44;
+		varobj.bone3 = varobj.bone33;
+	}
+	
+	game_status_update();
+	
 }
