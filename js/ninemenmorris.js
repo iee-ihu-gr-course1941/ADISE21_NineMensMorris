@@ -250,8 +250,8 @@ function do_move() {
 		one99: three3_43_53,
 		one10: three3_34_35,
 		one1010: three3_34_35,
-		one11: three5_45_55,
-		one1111: three5_45_55,
+		one111: three5_45_55,
+		one11111: three5_45_55,
 		one12: five3_54_55,
 		one1212: five3_54_55,
 		one13: one4_24_34,
@@ -282,8 +282,8 @@ function do_move() {
 		bone99: bthree3_43_53,
 		bone10: bthree3_34_35,
 		bone1010: bthree3_34_35,
-		bone11: bthree5_45_55,
-		bone1111: bthree5_45_55,
+		bone111: bthree5_45_55,
+		bone11111: bthree5_45_55,
 		bone12: bfive3_54_55,
 		bone1212: bfive3_54_55,
 		bone13: bone4_24_34,
@@ -313,7 +313,7 @@ function move_result(data){
 		varobj.one8(varobj);
 		varobj.one9(varobj);
 		varobj.one10(varobj);
-		varobj.one11(varobj);
+		varobj.one111(varobj);
 		varobj.one12(varobj);
 		varobj.one13(varobj);
 		varobj.one14(varobj);
@@ -332,7 +332,7 @@ function move_result(data){
 		varobj.bone8(varobj);
 		varobj.bone9(varobj);
 		varobj.bone10(varobj);
-		varobj.bone11(varobj);
+		varobj.bone111(varobj);
 		varobj.bone12(varobj);
 		varobj.bone13(varobj);
 		varobj.bone14(varobj);
@@ -447,7 +447,7 @@ function three3_34_35(varobj){
 function three5_45_55(varobj){
 	if(square_3_5.childNodes[0].classList.contains('W') && square_4_5.childNodes[0].classList.contains('W')
 		&& square_5_5.childNodes[0].classList.contains('W')) {
-			varobj.one11 = varobj.nu;
+			varobj.one111 = varobj.nu;
 			removePawn();
 	}
 }
@@ -580,7 +580,7 @@ function bthree3_34_35(varobj){
 function bthree5_45_55(varobj){
 	if(square_3_5.childNodes[0].classList.contains('B') && square_4_5.childNodes[0].classList.contains('B')
 		&& square_5_5.childNodes[0].classList.contains('B')) {
-			varobj.bone11 = varobj.nu;
+			varobj.bone111 = varobj.nu;
 			removePawn();
 	}
 }
@@ -694,6 +694,7 @@ function removesuccess(data){
 				}
 			}else {
 				alert('there is no pawn there');
+				return;
 			}
 		}else if(data['c'] == 'B'){
 			if(d.childNodes[0].classList.contains('B') ){
@@ -707,6 +708,7 @@ function removesuccess(data){
 				}
 			}else {
 				alert('there is no pawn there');
+				return;
 			}
 		}
 	}else {
@@ -801,7 +803,7 @@ function checkbtriangles(varobj, x, y ){
 		varobj.one10 = varobj.one1010;
 		varobj.one13 = varobj.one1313;
 	}else if(x == 3 && y == 5){
-		varobj.one11 = varobj.one1111;
+		varobj.one111 = varobj.one11111;
 		varobj.one10 = varobj.one1010;
 	}else if(x == 4 && y == 1){
 		varobj.one15 = varobj.one1515;
@@ -813,7 +815,7 @@ function checkbtriangles(varobj, x, y ){
 		varobj.one9 = varobj.one99;
 		varobj.one15 = varobj.one1515;
 	}else if(x == 4 && y == 5){
-		varobj.one11 = varobj.one11;
+		varobj.one111 = varobj.one11111;
 		varobj.one16 = varobj.one1616;
 	}else if(x == 4 && y == 6){
 		varobj.one7 = varobj.one77;
@@ -829,7 +831,7 @@ function checkbtriangles(varobj, x, y ){
 		varobj.one14 = varobj.one1414;
 	}else if(x == 5 && y == 5){
 		varobj.one12 = varobj.one1212;
-		varobj.one11 = varobj.one1111;
+		varobj.one111 = varobj.one11111;
 	}else if(x == 6 && y == 2){
 		varobj.one8 = varobj.one88;
 		varobj.one5 = varobj.one55;
@@ -879,7 +881,7 @@ function checktriangles(varobj, x, y){
 		varobj.bone10 = varobj.bone1010;
 		varobj.bone13 = varobj.bone1313;
 	}else if(x == 3 && y == 5){
-		varobj.bone11 = varobj.bone1111;
+		varobj.bone111 = varobj.bone11111;
 		varobj.bone10 = varobj.bone1010;
 	}else if(x == 4 && y == 1){
 		varobj.bone15 = varobj.bone1515;
@@ -891,7 +893,7 @@ function checktriangles(varobj, x, y){
 		varobj.bone9 = varobj.bone99;
 		varobj.bone15 = varobj.bone1515;
 	}else if(x == 4 && y == 5){
-		varobj.bone11 = varobj.bone11;
+		varobj.bone111 = varobj.bone11111;
 		varobj.bone16 = varobj.bone1616;
 	}else if(x == 4 && y == 6){
 		varobj.bone7 = varobj.bone77;
@@ -907,7 +909,7 @@ function checktriangles(varobj, x, y){
 		varobj.bone14 = varobj.bone1414;
 	}else if(x == 5 && y == 5){
 		varobj.bone12 = varobj.bone1212;
-		varobj.bone11 = varobj.bone1111;
+		varobj.bone111 = varobj.bone11111;
 	}else if(x == 6 && y == 2){
 		varobj.bone8 = varobj.bone88;
 		varobj.bone5 = varobj.bone55;
