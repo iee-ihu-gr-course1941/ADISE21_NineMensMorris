@@ -22,6 +22,7 @@ function move_piece($x,$y,$x2,$y2,$token) {
 		exit;
 	}	
 	
+	$color = current_color($token);
 	$color2 = current_color2($token,$x2,$y2);
 	
 	if(($color2 == 'W') || ($color2 == 'B')){
@@ -36,7 +37,6 @@ function move_piece($x,$y,$x2,$y2,$token) {
 		exit;
 	}
 	
-	$color = current_color($token);
 
 	if($color==null ) {
 		header("HTTP/1.1 400 Bad Request");
@@ -97,76 +97,175 @@ function convert_board(&$orig_board) {
 function add_valid_moves_to_piece(&$board,$b,$x,$y) {
 	$number_of_moves=0;
 	if($board[$x][$y]['piece_color']==$b) {
-		switch($board[$x][$y]['piece_color']){
-			case 'W': $number_of_moves+=opawn_moves($board,$b,$x,$y);break;
-			case 'B': $number_of_moves+=mpawn_moves($board,$b,$x,$y);break;
-			case 'I': $number_of_moves+=ipawn_moves($board,$b,$x,$y);break;
+		switch($x){
+			case '1': 
+				switch($y){
+					case '1': $number_of_moves+=one1_moves($board,$b,$x,$y);break;
+					case '2': break;
+					case '3': break;
+					case '4': $number_of_moves+=one4_moves($board,$b,$x,$y);break;
+					case '5': break;
+					case '6': break;
+					case '7': $number_of_moves+=one1_moves($board,$b,$x,$y);break;
+				}
+				break;
+			case '2': 
+				switch($y){
+					case '1': break;
+					case '2': $number_of_moves+=two2_moves($board,$b,$x,$y);break;
+					case '3': break;
+					case '4': $number_of_moves+=two4_moves($board,$b,$x,$y);break;
+					case '5': break;
+					case '6': $number_of_moves+=two2_moves($board,$b,$x,$y);break;
+					case '7': break;
+				}
+				break;
+			case '3': 
+				switch($y){
+					case '1': break;
+					case '2': break;
+					case '3': $number_of_moves+=three3_moves($board,$b,$x,$y);break;
+					case '4': $number_of_moves+=three3_moves($board,$b,$x,$y);break;
+					case '5': $number_of_moves+=three3_moves($board,$b,$x,$y);break;
+					case '6': break;
+					case '7': break;
+				}
+				break;
+			case '4': 
+				switch($y){
+					case '1': $number_of_moves+=four1_moves($board,$b,$x,$y);break;
+					case '2': $number_of_moves+=four2_moves($board,$b,$x,$y);break;
+					case '3': $number_of_moves+=three3_moves($board,$b,$x,$y);break;
+					case '4': break;
+					case '5': $number_of_moves+=three3_moves($board,$b,$x,$y);break;
+					case '6': $number_of_moves+=four2_moves($board,$b,$x,$y);break;
+					case '7': $number_of_moves+=four1_moves($board,$b,$x,$y);break;
+				}
+				break;
+			case '5': 
+				switch($y){
+					case '1': break;
+					case '2': break;
+					case '3': $number_of_moves+=three3_moves($board,$b,$x,$y);break;
+					case '4': $number_of_moves+=three3_moves($board,$b,$x,$y);break;
+					case '5': $number_of_moves+=three3_moves($board,$b,$x,$y);break;
+					case '6': break;
+					case '7': break;
+				}
+				break;
+			case '6': 
+				switch($y){
+					case '1': break;
+					case '2': $number_of_moves+=two2_moves($board,$b,$x,$y);break;
+					case '3': break;
+					case '4': $number_of_moves+=two4_moves($board,$b,$x,$y);break;
+					case '5': break;
+					case '6': $number_of_moves+=two2_moves($board,$b,$x,$y);break;
+					case '7': break;
+				}
+				break;
+			case '7': 
+				switch($y){
+					case '1': $number_of_moves+=one1_moves($board,$b,$x,$y);break;
+					case '2': break;
+					case '3': break;
+					case '4': $number_of_moves+=one4_moves($board,$b,$x,$y);break;
+					case '5': break;
+					case '6': break;
+					case '7': $number_of_moves+=one1_moves($board,$b,$x,$y);break;
+				}
+				break;
+			//case 'I': $number_of_moves+=ipawn_moves($board,$b,$x,$y);break;
 		}
 	} 
 	return($number_of_moves);
 }
 
-function opawn_moves(&$board,$b,$x,$y) {
-	$directions = [
-		[3,0],
-		[-3,0],
-		[0,3],
-		[0,-3],
+function three3_moves(&$board,$b,$x,$y) {
+	$m = [
 		[1,0],
 		[-1,0],
 		[0,1],
 		[0,-1]
 	];	
-	return(bishop_rook_queen_moves($board,$b,$x,$y,$directions));
+	return(pawnmoves($board,$b,$x,$y,$m));
 	
 }
 
-function mpawn_moves(&$board,$b,$x,$y) {
-	$directions = [
+function two4_moves(&$board,$b,$x,$y) {
+	$m = [
+		[1,0],
+		[-1,0],
+		[0,2],
+		[0,-2]
+	];	
+	return(pawnmoves($board,$b,$x,$y,$m));
+	
+}
+
+function four2_moves(&$board,$b,$x,$y) {
+	$m = [
+		[2,0],
+		[-2,0],
+		[0,1],
+		[0,-1]
+	];	
+	return(pawnmoves($board,$b,$x,$y,$m));
+	
+}
+
+function one1_moves(&$board,$b,$x,$y) {
+	$m = [
+		[3,0],
+		[-3,0],
+		[0,3],
+		[0,-3]
+	];	
+	return(pawnmoves($board,$b,$x,$y,$m));
+	
+}
+
+function one4_moves(&$board,$b,$x,$y) {
+	$m = [
+		[1,0],
+		[-1,0],
+		[0,3],
+		[0,-3]
+	];	
+	return(pawnmoves($board,$b,$x,$y,$m));
+}
+
+function four1_moves(&$board,$b,$x,$y) {
+	$m = [
+		[3,0],
+		[-3,0],
+		[0,1],
+		[0,-1]
+	];	
+	return(pawnmoves($board,$b,$x,$y,$m));
+}
+
+function two2_moves(&$board,$b,$x,$y) {
+	$m= [
 		[2,0],
 		[-2,0],
 		[0,2],
-		[0,-2],
-		[1,0],
-		[-1,0],
-		[0,1],
-		[0,-1]
+		[0,-2]
 	];	
-	return(bishop_rook_queen_moves($board,$b,$x,$y,$directions));
+	return(pawnmoves($board,$b,$x,$y,$m));
 }
 
-function ipawn_moves(&$board,$b,$x,$y) {
-	$directions = [
-		[1,0],
-		[-1,0],
-		[0,1],
-		[0,-1],
-		[1,0],
-		[-1,0],
-		[0,1],
-		[0,-1]
-	];	
-	return(bishop_rook_queen_moves($board,$b,$x,$y,$directions));
-}
-
-function bishop_rook_queen_moves(&$board,$b,$x,$y,$directions) {
+function pawnmoves(&$board,$b,$x,$y,$m) {
 	$moves=[];
-
-	foreach($directions as $d=>$direction) {
-		for($i=$x+$direction[0],$j=$y+$direction[1]; $i>=1 && $i<=7 && $j>=1 && $j<=7; $i+=$direction[0], $j+=$direction[1]) {
-			if( $board[$i][$j]['piece_color'] == null ){ 
-				$move=['x'=>$i, 'y'=>$j];
-				$moves[]=$move;
-			} else if ( $board[$i][$j]['piece_color'] != $b) {
-				$move=['x'=>$i, 'y'=>$j];
-				$moves[]=$move;
-				// Υπάρχει πιόνι αντιπάλου... Δεν πάμε παραπέρα.
-				break;
-			} else if ( $board[$i][$j]['piece_color'] == $b) {
-				break;
-			}
+	foreach($m as $k=>$t) {
+		$x2=$x+$t[0];
+		$y2=$y+$t[1];
+		if( $x2>=1 && $x2<=8 && $y2>=1 && $y2<=8 &&
+			$board[$x2][$y2]['piece_color'] !=$b ) {
+			// Αν ο προορισμός είναι εντός σκακιέρας και δεν υπάρχει δικό μου πιόνι
+			$move=['x'=>$x2, 'y'=>$y2];
+			$moves[]=$move;
 		}
-
 	}
 	$board[$x][$y]['moves'] = $moves;
 	return(sizeof($moves));
