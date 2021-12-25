@@ -95,16 +95,30 @@ function current_color($token) {
 	return(null);
 }
 
-function current_bcolor($token) {
+function current_bcolor($token,$x2,$y2) {
 	global $mysqli;
 	if($token==null) {return(null);}
 	$sql = 'select Bcolor from board where X=? and Y=?';
 	$st = $mysqli->prepare($sql);
-	$st->bind_param('ss',$x,$y);
+	$st->bind_param('ss',$x2,$y2);
 	$st->execute();
 	$res = $st->get_result();
 	if($row=$res->fetch_assoc()) {
 		return($row['Bcolor']);
+	}
+	return(null);
+}
+
+function current_color2($token,$x2,$y2) {
+	global $mysqli;
+	if($token==null) {return(null);}
+	$sql = 'select piece_color from board where X=? and Y=?';
+	$st = $mysqli->prepare($sql);
+	$st->bind_param('ss',$x2,$y2);
+	$st->execute();
+	$res = $st->get_result();
+	if($row=$res->fetch_assoc()) {
+		return($row['piece_color']);
 	}
 	return(null);
 }

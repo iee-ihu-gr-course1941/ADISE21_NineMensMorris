@@ -15,22 +15,29 @@ function show_piece($x,$y) {
 
 function move_piece($x,$y,$x2,$y2,$token) {
 	
-/*	$color1 = current_bcolor($token);
+    $color1 = current_bcolor($token,$x2,$y2);
 	if($color1 == 'r'){
 		header("HTTP/1.1 400 Bad Request");
 		print json_encode(['errormesg'=>"cant move there."]); 
 		exit;
 	}	
 	
+	$color2 = current_color2($token,$x2,$y2);
+	
+	if(($color2 == 'W') || ($color2 == 'B')){
+		header("HTTP/1.1 400 Bad Request");
+		print json_encode(['errormesg'=>"cant move there,there is a pawn there."]); 
+		exit;
+	}
 	
 	if($token==null || $token=='') {
 		header("HTTP/1.1 400 Bad Request");
 		print json_encode(['errormesg'=>"token is not set."]);
 		exit;
 	}
-*/	
+	
 	$color = current_color($token);
-	/*
+
 	if($color==null ) {
 		header("HTTP/1.1 400 Bad Request");
 		print json_encode(['errormesg'=>"You are not a player of this game."]);
@@ -47,7 +54,7 @@ function move_piece($x,$y,$x2,$y2,$token) {
 		print json_encode(['errormesg'=>"It is not your turn."]);
 		exit;
 	}
-	*/
+
 	$orig_board=read_board();
 	$board=convert_board($orig_board);
 	$n = add_valid_moves_to_piece($board,$color,$x,$y);
@@ -67,10 +74,22 @@ function move_piece($x,$y,$x2,$y2,$token) {
 	exit;
 }
 
+function add_valid_moves_to_board(&$board,$b) {
+	$number_of_moves=0;
+	
+	for($x=1;$x<8;$x++) {
+		for($y=1;$y<8;$y++) {
+			$number_of_moves+=add_valid_moves_to_piece($board,$b,$x,$y);
+		}
+	}
+	return($number_of_moves);
+}
+
+
 function convert_board(&$orig_board) {
 	$board=[];
 	foreach($orig_board as $i=>&$row) {
-		$board[$row['x']][$row['y']] = &$row;
+		$board[$row['X']][$row['Y']] = &$row;
 	} 
 	return($board);
 }
@@ -157,7 +176,7 @@ function bishop_rook_queen_moves(&$board,$b,$x,$y,$directions) {
 function show_board() {
 
 	global $mysqli;
-	
+
 	$sql = 'select * from board' ;
 	$st = $mysqli->prepare($sql);
 	
@@ -168,6 +187,7 @@ function show_board() {
 	print json_encode($res->fetch_all(MYSQLI_ASSOC), JSON_PRETTY_PRINT);
 	
 }
+
 
 function reset_board() {
 	global $mysqli;

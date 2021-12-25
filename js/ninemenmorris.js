@@ -158,14 +158,14 @@ function do_premove(data) {
 	var a = s.trim().split(/[ ]+/);
 	var d = document.getElementById('square_'+a[0]+'_'+a[1]);
 	var pnumb = data[0];
-
-	if((pnumb.playernumber < 9) && ($(d).children().hasClass('W') || $(d).children().hasClass('B'))){
+//
+	if((pnumb.playernumber < 2) && ($(d).children().hasClass('W') || $(d).children().hasClass('B'))){
 		alert("There is already a pawn in that location");
 	}
 	else if(d.classList.contains('g_square')){
 		
-
-		if(pnumb.playernumber == 9){
+//
+		if(pnumb.playernumber == 2){
 			do_move();
 			checkWtriangles(varobj);
 		}else if(pnumb.playernumber < 9){
