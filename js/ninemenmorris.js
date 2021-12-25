@@ -106,7 +106,7 @@ function login_error(data,y,z,c) {
 
 function game_status_update() {
 	
-	//clearTimeout(timer);
+	clearTimeout(timer);
 	$.ajax({url: "NineMenMorris.php/status/", success: update_status });
 }
 
@@ -159,7 +159,7 @@ function do_premove(data) {
 	var d = document.getElementById('square_'+a[0]+'_'+a[1]);
 	var pnumb = data[0];
 
-	if($(d).children().hasClass('W') || $(d).children().hasClass('B')){
+	if((pnumb.playernumber < 9) && ($(d).children().hasClass('W') || $(d).children().hasClass('B'))){
 		alert("There is already a pawn in that location");
 	}
 	else if(d.classList.contains('g_square')){
@@ -168,7 +168,7 @@ function do_premove(data) {
 		if(pnumb.playernumber == 9){
 			do_move();
 			checkWtriangles(varobj);
-		}else{
+		}else if(pnumb.playernumber < 9){
 			addmove();
 			checkWtriangles(varobj);
 		}
@@ -222,7 +222,7 @@ function do_move() {
 			method: 'PUT',
 			dataType: "json",
 			contentType: 'application/json',
-			data: JSON.stringify( {x: a[2], y: a[3]}),
+			data: JSON.stringify( {x: a[2], y: a[3] , token: me.token}),
 			headers: {"X-Token": me.token},
 			success: move_result,
 			error: login_error});
@@ -775,6 +775,7 @@ function checkWtriangles(varobj){
 			}
 		}
 	}
+	game_status_update();
 }
 
 function checkbtriangles(varobj, x, y ){
@@ -852,7 +853,6 @@ function checkbtriangles(varobj, x, y ){
 		varobj.one3 = varobj.one33;
 	}
 	
-	game_status_update();
 }
 
 function checktriangles(varobj, x, y){
@@ -930,6 +930,6 @@ function checktriangles(varobj, x, y){
 		varobj.bone3 = varobj.bone33;
 	}
 	
-	game_status_update();
+
 	
 }

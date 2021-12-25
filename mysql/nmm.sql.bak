@@ -23,16 +23,34 @@ SET time_zone = "+00:00";
 DROP PROCEDURE IF EXISTS `turnupdate`;
 DROP PROCEDURE IF EXISTS `move_piece`;
 DROP PROCEDURE IF EXISTS `reset_board`;
+DROP PROCEDURE IF EXISTS `move_piece2`;
 
 DELIMITER $$
 --
 -- Procedures
 --
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `turnupdate` (`x1` char)  BEGIN
-	declare  p_color = x1;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `move_piece2` (`x1` TINYINT, `y1` TINYINT, `x2` TINYINT, `y2` TINYINT)  BEGIN
+	declare  p_color char;
 	
+	select  piece_color into p_color FROM `board` WHERE X=x1 AND Y=y1;
+	
+	update board
+	set piece_color=p_color
+	where x=x2 and y=y2;
+	
+	UPDATE board
+	SET piece_color=null
+	WHERE X=x1 AND Y=y1;
 	update game_status set p_turn=if(p_color='W','B','W');
+	
+    END ;;
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `turnupdate` (`x1` char)  BEGIN
+	
+	update game_status set p_turn=if(x1='W','B','W');
 	
     END$$
 
