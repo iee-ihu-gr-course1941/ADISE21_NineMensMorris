@@ -117,17 +117,17 @@ function update_status(data) {
 	update_info();
 	clearTimeout(timer);
 	if(game_status.p_turn==me.piece_color &&  me.piece_color!=null) {
-		if($('#removepawn').is(':visible')){
-			;
-		}else{
+		//if($('#removepawn').is(':visible')){
+		//	;
+		//}else{
 			x=0;
 			// do play
 			if(game_stat_old.p_turn!=game_status.p_turn) {
 				fill_board();
 			}
 			$('#move_div').show(1000);
-			setTimeout(function() { game_status_update();}, 15000);
-		}
+			setTimeout(function() { game_status_update();}, 3000);
+		//}
 	} else {
 		// must wait for something
 		$('#move_div').hide(1000);
@@ -157,15 +157,16 @@ function do_premove(data) {
 	var s = $('#the_move').val();
 	var a = s.trim().split(/[ ]+/);
 	var d = document.getElementById('square_'+a[0]+'_'+a[1]);
+	var z = document.getElementById('square_'+a[2]+'_'+a[3]);
 	var pnumb = data[0];
 //
-	if((pnumb.playernumber < 2) && ($(d).children().hasClass('W') || $(d).children().hasClass('B'))){
+	if((pnumb.playernumber < 9) && ($(z).children().hasClass('W') || $(z).children().hasClass('B'))){
 		alert("There is already a pawn in that location");
 	}
 	else if(d.classList.contains('g_square')){
 		
 //
-		if(pnumb.playernumber == 2){
+		if(pnumb.playernumber == 9){
 			do_move();
 			checkWtriangles(varobj);
 		}else if(pnumb.playernumber < 9){
@@ -175,6 +176,8 @@ function do_premove(data) {
 	}else{
 		alert('Illegal Move');
 	}
+	game_status_update();
+	fill_board();
 }
 
 function addmove() {
@@ -200,6 +203,11 @@ function addmove() {
 		alert('Wrong Color');
 		return;
 	}
+	var d = document.getElementById('square_'+a[0]+'_'+a[1]);
+	if(d.childNodes[0].classList.contains('W') || d.childNodes[0].classList.contains('B')){
+		alert('There is already a pawn there');
+		return;
+	}
 	$.ajax({url: "ninemenmorris.php/putpiece/"+a[0]+'/'+a[1]+'/'+a[2], 
 			method: 'PUT',
 			dataType: "json",
@@ -208,6 +216,9 @@ function addmove() {
 			headers: {"X-Token": me.token},
 			success: move_result,
 			error: login_error});
+			
+			game_status_update();
+			fill_board();
 }
 
 function do_move() {
@@ -226,6 +237,9 @@ function do_move() {
 			headers: {"X-Token": me.token},
 			success: move_result,
 			error: login_error});
+			
+			game_status_update();
+			fill_board();
 	
 }
 
@@ -339,7 +353,7 @@ function move_result(data){
 		varobj.bone15(varobj);
 		varobj.bone16(varobj);
 	}
-		
+	
 	/*var a = 1;
 	var b = 1;
 	var c = 7;
@@ -652,7 +666,8 @@ function removePawn(){
 }
 
 function pawn(){
-	;
+	game_status_update();
+	fill_board();
 }
 
 function removepawn2() {
@@ -666,6 +681,15 @@ function removepawn2() {
 	var p_color = $('#pcolor').val();
 	if(p_color != a[2]){
 		alert('Wrong Color');
+		return;
+	}
+	var d = document.getElementById('square_'+a[0]+'_'+a[1]);
+	
+	if(p_color == 'W' && d.childNodes[0].classList.contains('W')){
+		alert('Cant Remove Your Own Pawn');
+		return;
+	}else if(p_color == 'B' && d.childNodes[0].classList.contains('B')){
+		alert('Cant Remove Your Own Pawn');
 		return;
 	}
 	$.ajax({url: "ninemenmorris.php/removepiece/"+a[0]+'/'+a[1]+'/'+a[2], 
@@ -759,6 +783,59 @@ function removesuccess(data){
 //	}
 	checkWtriangles(varobj);
 	
+	var pcol;
+	
+	if(p_color == 'W'){
+		pcol = 'B';
+	}
+	else if(p_color == 'B'){
+		pcol = 'W';
+	}
+	
+	
+	$.ajax({url: "ninemenmorris.php/counternumber/"+pcol, 
+			method: 'PUT',
+			dataType: "json",
+			contentType: 'application/json',
+			headers: {"X-Token": me.token},
+			success: pawn2,
+			error: login_error});
+	
+	
+}
+
+function pawn2(){
+	game_status_update();
+	fill_board();
+	var pcol = $('#pcolor').val();
+	if(pcol == 'W'){
+		pcol = 'B';
+	}
+	else if(p_color == 'B'){
+		pcol = 'W';
+	}
+	
+		$.ajax({url: "ninemenmorris.php/getcounternumber/"+pcol, 
+			method: 'GET',
+			dataType: "json",
+			contentType: 'application/json',
+			headers: {"X-Token": me.token},
+			success: win,
+			error: login_error});
+}
+
+function win(data) {
+	var p_color = $('#pcolor').val();
+	game_status_update();
+	fill_board();
+	var cn = data[0];
+	if(cn.counterNumber < 3 && p_color == 'W'){
+		alert('Player W is the winner');
+		return;
+	}else if(cn.counterNumber < 3 && p_color == 'B'){
+		alert('Player B is the winner');
+		return;
+	}
 }
 
 function checkWtriangles(varobj){

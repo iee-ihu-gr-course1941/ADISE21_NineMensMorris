@@ -123,5 +123,19 @@ function current_color2($token,$x2,$y2) {
 	return(null);
 }
 
+function currentNumber($token) {
+	global $mysqli;
+	if($token==null) {return(null);}
+	$sql = 'select counterNumber from players where token=?';
+	$st = $mysqli->prepare($sql);
+	$st->bind_param('s',$token);
+	$st->execute();
+	$res = $st->get_result();
+	if($row=$res->fetch_assoc()) {
+		return($row['counterNumber']);
+	}
+	return(null);
+
+}
 
 ?>

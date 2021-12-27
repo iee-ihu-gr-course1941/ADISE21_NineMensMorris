@@ -41,10 +41,30 @@ switch ($r=array_shift($request)) {
 			break;
 	case 'changeB': handle_changeB($method);
 			break;
+	case 'counternumber': handle_counternumber($method, $request[0]);
+			break;
+	case 'getcounternumber': handle_getcounternumber($method, $request[0]);
+			break;
 	case 'players': handle_player($method, $request,$input);
 			    break;
 	default:  header("HTTP/1.1 404 Not Found");
                         exit;
+}
+
+function handle_getcounternumber($method, $col){
+	if($method=='GET') {
+            getcounterNum($col);
+    } else {
+        header('HTTP/1.1405 Method Not Allowed');
+    }
+}
+
+function handle_counternumber($method, $col){
+	if($method=='PUT') {
+            counterNum($col);
+    } else {
+        header('HTTP/1.1405 Method Not Allowed');
+    }
 }
 
 function handle_removepiece($method , $x, $y, $piece_color, $input){
