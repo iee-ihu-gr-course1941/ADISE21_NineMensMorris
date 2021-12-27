@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2021 at 09:00 PM
+-- Generation Time: Dec 27, 2021 at 05:32 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -20,16 +20,24 @@ SET time_zone = "+00:00";
 --
 -- Database: `nmm`
 --
-DROP PROCEDURE IF EXISTS `turnupdate`;
+
 DROP PROCEDURE IF EXISTS `move_piece`;
-DROP PROCEDURE IF EXISTS `reset_board`;
 DROP PROCEDURE IF EXISTS `move_piece2`;
+DROP PROCEDURE IF EXISTS `reset_board`;
+DROP PROCEDURE IF EXISTS `turnupdate`;
 
 DELIMITER $$
 --
 -- Procedures
 --
-
+CREATE DEFINER=`root`@`localhost` PROCEDURE `move_piece` (`x1` TINYINT, `y1` TINYINT)  BEGIN
+	declare  p_color char;
+	
+	select  piece_color into  p_color FROM `board` WHERE X=x1 AND Y=y1;
+	
+	update game_status set p_turn=if(p_color='W','B','W');
+	
+    END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `move_piece2` (`x1` TINYINT, `y1` TINYINT, `x2` TINYINT, `y2` TINYINT)  BEGIN
 	declare  p_color char;
@@ -47,27 +55,17 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `move_piece2` (`x1` TINYINT, `y1` TI
 	
     END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_board` ()  BEGIN 
+REPLACE INTO board SELECT * FROM boardempty;
+update `players` set username=null, token=null, playerNumber=0, counterNumber=9;
+update `game_status` set `status`='not active', `p_turn`=null, `result`=null;
+END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `turnupdate` (`x1` char)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `turnupdate` (`x1` CHAR)  BEGIN
 	
 	update game_status set p_turn=if(x1='W','B','W');
 	
     END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `move_piece` (`x1` TINYINT, `y1` TINYINT)  BEGIN
-	declare  p_color char;
-	
-	select  piece_color into  p_color FROM `board` WHERE X=x1 AND Y=y1;
-	
-	update game_status set p_turn=if(p_color='W','B','W');
-	
-    END$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `reset_board` ()  BEGIN 
-REPLACE INTO board SELECT * FROM boardempty;
-update `players` set username=null, token=null, playerNumber=0;
-update `game_status` set `status`='not active', `p_turn`=null, `result`=null;
-END$$
 
 DELIMITER ;
 
@@ -76,6 +74,7 @@ DELIMITER ;
 --
 -- Table structure for table `board`
 --
+
 DROP TABLE IF EXISTS `board`;
 
 CREATE TABLE `board` (
@@ -90,13 +89,13 @@ CREATE TABLE `board` (
 --
 
 INSERT INTO `board` (`X`, `Y`, `piece_color`, `Bcolor`) VALUES
-(1, 1, NULL, 'g'),
+(1, 1, 'W', 'g'),
 (1, 2, NULL, 'r'),
 (1, 3, NULL, 'r'),
 (1, 4, NULL, 'g'),
 (1, 5, NULL, 'r'),
 (1, 6, NULL, 'r'),
-(1, 7, NULL, 'g'),
+(1, 7, 'W', 'g'),
 (2, 1, NULL, 'r'),
 (2, 2, NULL, 'g'),
 (2, 3, NULL, 'r'),
@@ -111,7 +110,7 @@ INSERT INTO `board` (`X`, `Y`, `piece_color`, `Bcolor`) VALUES
 (3, 5, NULL, 'g'),
 (3, 6, NULL, 'r'),
 (3, 7, NULL, 'r'),
-(4, 1, NULL, 'g'),
+(4, 1, 'W', 'g'),
 (4, 2, NULL, 'g'),
 (4, 3, NULL, 'g'),
 (4, 4, NULL, 'r'),
@@ -122,7 +121,7 @@ INSERT INTO `board` (`X`, `Y`, `piece_color`, `Bcolor`) VALUES
 (5, 2, NULL, 'r'),
 (5, 3, NULL, 'g'),
 (5, 4, NULL, 'g'),
-(5, 5, NULL, 'g'),
+(5, 5, 'B', 'g'),
 (5, 6, NULL, 'r'),
 (5, 7, NULL, 'r'),
 (6, 1, NULL, 'r'),
@@ -132,19 +131,20 @@ INSERT INTO `board` (`X`, `Y`, `piece_color`, `Bcolor`) VALUES
 (6, 5, NULL, 'r'),
 (6, 6, NULL, 'g'),
 (6, 7, NULL, 'r'),
-(7, 1, NULL, 'g'),
+(7, 1, 'W', 'g'),
 (7, 2, NULL, 'r'),
 (7, 3, NULL, 'r'),
 (7, 4, NULL, 'g'),
 (7, 5, NULL, 'r'),
 (7, 6, NULL, 'r'),
-(7, 7, NULL, 'g');
+(7, 7, 'W', 'g');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `boardempty`
 --
+
 DROP TABLE IF EXISTS `boardempty`;
 
 CREATE TABLE `boardempty` (
@@ -228,7 +228,7 @@ CREATE TABLE `game_status` (
 --
 
 INSERT INTO `game_status` (`status`, `p_turn`, `result`, `last_change`) VALUES
-('started', 'W', NULL, '2021-12-18 19:50:44');
+('started', 'B', NULL, '2021-12-27 16:31:04');
 
 --
 -- Triggers `game_status`
@@ -254,16 +254,17 @@ CREATE TABLE `players` (
   `token` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   `last_action` timestamp NULL DEFAULT NULL,
   `piece_color` enum('W','B') COLLATE utf8_bin NOT NULL,
-  `playerNumber` int(11) DEFAULT NULL
+  `playerNumber` int(11) DEFAULT NULL,
+  `counterNumber` int(11) DEFAULT 9
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `players`
 --
 
-INSERT INTO `players` (`username`, `token`, `last_action`, `piece_color`, `playerNumber`) VALUES
-('dsadasads', '63d3453c142e6e4292940f67ca2f4e2e', NULL, 'W', 0),
-('dasdas', '3f326aa31ed66cd9a9a18a0671610da8', NULL, 'B', 0);
+INSERT INTO `players` (`username`, `token`, `last_action`, `piece_color`, `playerNumber`, `counterNumber`) VALUES
+('DSA', 'aa3989e63d0ae205bde6c2f2757a5b20', NULL, 'W', 9, 9),
+('DSA', '8e2cac307a83f170867e1096b507f655', NULL, 'B', 9, 6);
 
 --
 -- Indexes for dumped tables
