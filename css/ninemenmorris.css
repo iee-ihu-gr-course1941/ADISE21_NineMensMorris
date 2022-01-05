@@ -102,6 +102,12 @@ div.g_square{
 	left: 830px;
 }
 
+#win_info{
+	position: relative;
+	left: 830px;
+	color: red;
+}
+
 #removepawn{
 	position: relative;
 	left: 600px;

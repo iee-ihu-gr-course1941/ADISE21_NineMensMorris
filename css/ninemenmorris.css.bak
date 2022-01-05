@@ -45,7 +45,7 @@ TD.r_square{
 	border: groove;
 	margin-top: 10px;
 	border-color: aquamarine;
-	background-color: lightgreen;
+	background-color: whitesmoke;
 }
 
 /* TD#square_4_2 div{
@@ -98,6 +98,11 @@ div.g_square{
 }
 
 #game_info{
+	position: relative;
+	left: 830px;
+}
+
+#win_info{
 	position: relative;
 	left: 830px;
 }

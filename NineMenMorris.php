@@ -45,10 +45,30 @@ switch ($r=array_shift($request)) {
 			break;
 	case 'getcounternumber': handle_getcounternumber($method, $request[0]);
 			break;
+	case 'winB': handle_winB($method);
+			break;
+	case 'winW': handle_winW($method);
+			break;
 	case 'players': handle_player($method, $request,$input);
 			    break;
 	default:  header("HTTP/1.1 404 Not Found");
                         exit;
+}
+
+function handle_winW($method){
+	if($method=='GET') {
+            winW();
+    } else {
+        header('HTTP/1.1405 Method Not Allowed');
+    }
+}
+
+function handle_winB($method){
+	if($method=='GET') {
+            winB();
+    } else {
+        header('HTTP/1.1405 Method Not Allowed');
+    }
 }
 
 function handle_getcounternumber($method, $col){

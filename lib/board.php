@@ -446,4 +446,32 @@ function do_move($x,$y,$x2,$y2) {
 	print json_encode(read_board(), JSON_PRETTY_PRINT);
 }
 
+function winB(){
+	global $mysqli;
+	$sql = "update game_status set status='ended'";
+	$st2 = $mysqli->prepare($sql);
+	$st2->execute();
+	
+	$sql = "update game_status set result='B'";
+	$st3 = $mysqli->prepare($sql);
+	$st3->execute();
+
+	header('Content-type: application/json');
+	print json_encode(read_board(), JSON_PRETTY_PRINT);
+}
+
+function winW(){
+	global $mysqli;
+	$sql = "update game_status set status='ended'";
+	$st2 = $mysqli->prepare($sql);
+	$st2->execute();
+	
+	$sql = "update game_status set result='W'";
+	$st3 = $mysqli->prepare($sql);
+	$st3->execute();
+
+	header('Content-type: application/json');
+	print json_encode(read_board(), JSON_PRETTY_PRINT);
+}
+
 ?>
