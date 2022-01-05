@@ -24,6 +24,29 @@ TD.r_square{
     background-color:#fff0c1;
 }
 
+#howtoplay{
+	text-align: center;
+	margin-top: -15px;
+	margin-bottom: 15px;
+}
+
+#howtoplayheader{
+    display: flex;
+    justify-content: center;
+	text-align: center;
+	margin-top: 10px;
+	font-size: 22px;
+	font-weight: bold;
+}
+
+#htpwrapper{
+	width: 100%;
+	text-align: center;
+	border: groove;
+	margin-top: 10px;
+	border-color: aquamarine;
+	background-color: lightgreen;
+}
 
 /* TD#square_4_2 div{
     background-color: black;
@@ -81,7 +104,7 @@ div.g_square{
 
 #removepawn{
 	position: relative;
-	left: 700px;
+	left: 600px;
 }
 
 IMG.piece {width: 5em; height:5em; padding:0px; margin:0px;}
