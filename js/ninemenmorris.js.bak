@@ -41,6 +41,8 @@ function reset_board() {
 	$.ajax({url: "ninemenmorris.php/board/", headers: {"X-Token": me.token}, method: 'POST',  success: fill_board_by_data });
 	$('#move_div').hide();
 	$('#game_initializer').show(2000);
+	$('#win_info').hide();
+	varobj2.fr = varobj2.ff;
 	document.getElementById('username').value = '';
 	document.getElementById('username').select();
 }
@@ -145,6 +147,10 @@ function update_status(data) {
 		method: 'GET',
 		dataType: "json",
 		contentType: 'application/json'});
+		$('#win_info').html("Player "+game_status.result+" is the winner!!!!!");
+	}
+	
+	if(game_status.status == 'ended' && (game_status.result == 'W' || game_status.result == 'B')){
 		$('#win_info').html("Player "+game_status.result+" is the winner!!!!!");
 	}
 }
@@ -257,7 +263,9 @@ function do_move() {
 }
 
 	let varobj2 = {
-		fr: no
+		fr: no,
+		ff: no
+		
 	};
 
 	let varobj = {
