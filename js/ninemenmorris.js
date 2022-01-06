@@ -41,8 +41,8 @@ function reset_board() {
 	$.ajax({url: "ninemenmorris.php/board/", headers: {"X-Token": me.token}, method: 'POST',  success: fill_board_by_data });
 	$('#move_div').hide();
 	$('#game_initializer').show(2000);
-	$('#win_info').hide();
 	varobj2.fr = varobj2.ff;
+	$('#win_info').html("");
 	document.getElementById('username').value = '';
 	document.getElementById('username').select();
 }
