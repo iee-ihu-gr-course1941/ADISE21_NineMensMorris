@@ -276,7 +276,7 @@ function addmove() {
     return;
   }
   $.ajax({
-    url: 'ninemenmorris.php/putpiece/' + a[0] + '/' + a[1] + '/' + a[2],
+    url: 'NineMenMorris.php/putpiece/' + a[0] + '/' + a[1] + '/' + a[2],
     method: 'PUT',
     dataType: 'json',
     contentType: 'application/json',
@@ -304,7 +304,7 @@ function do_move() {
     return;
   }
   $.ajax({
-    url: 'ninemenmorris.php/board/piece/' + a[0] + '/' + a[1],
+    url: 'NineMenMorris.php/board/piece/' + a[0] + '/' + a[1],
     method: 'PUT',
     dataType: 'json',
     contentType: 'application/json',
@@ -817,7 +817,7 @@ function removePawn() {
   var p_color = $('#pcolor').val();
   if (game_status.p_turn == p_color && game_status.p_turn == 'W') {
     $.ajax({
-      url: 'ninemenmorris.php/changeB/',
+      url: 'NineMenMorris.php/changeB/',
       method: 'GET',
       dataType: 'json',
       contentType: 'application/json',
@@ -828,7 +828,7 @@ function removePawn() {
 
   if (game_status.p_turn == p_color && game_status.p_turn == 'B') {
     $.ajax({
-      url: 'ninemenmorris.php/changeW/',
+      url: 'NineMenMorris.php/changeW/',
       method: 'GET',
       dataType: 'json',
       contentType: 'application/json',
@@ -866,7 +866,7 @@ function removepawn2() {
     return;
   }
   $.ajax({
-    url: 'ninemenmorris.php/removepiece/' + a[0] + '/' + a[1] + '/' + a[2],
+    url: 'NineMenMorris.php/removepiece/' + a[0] + '/' + a[1] + '/' + a[2],
     method: 'PUT',
     dataType: 'json',
     contentType: 'application/json',
@@ -937,7 +937,7 @@ function removesuccess(data) {
   console.log(p_color);
   if (game_status.p_turn == p_color && game_status.p_turn == 'W') {
     $.ajax({
-      url: 'ninemenmorris.php/changeW/',
+      url: 'NineMenMorris.php/changeW/',
       method: 'GET',
       dataType: 'json',
       contentType: 'application/json',
@@ -948,7 +948,7 @@ function removesuccess(data) {
 
   if (game_status.p_turn == p_color && game_status.p_turn == 'B') {
     $.ajax({
-      url: 'ninemenmorris.php/changeB/',
+      url: 'NineMenMorris.php/changeB/',
       method: 'GET',
       dataType: 'json',
       contentType: 'application/json',
@@ -978,7 +978,7 @@ function removesuccess(data) {
   }
 
   $.ajax({
-    url: 'ninemenmorris.php/counternumber/' + pcol,
+    url: 'NineMenMorris.php/counternumber/' + pcol,
     method: 'PUT',
     dataType: 'json',
     contentType: 'application/json',
@@ -999,7 +999,7 @@ function pawn2() {
   }
 
   $.ajax({
-    url: 'ninemenmorris.php/getcounternumber/' + pcol,
+    url: 'NineMenMorris.php/getcounternumber/' + pcol,
     method: 'GET',
     dataType: 'json',
     contentType: 'application/json',
