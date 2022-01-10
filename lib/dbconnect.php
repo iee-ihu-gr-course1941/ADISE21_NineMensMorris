@@ -5,11 +5,12 @@ require_once "config_local.php";
 
 $user=$DB_USER;
 $pass=$DB_PASS;
+$pass2='';
 
 if(gethostname()=='users.iee.ihu.gr') {
 	$mysqli = new mysqli($host, $user, $pass, $db,null,'/home/student/it/2016/it164840/mysql/run/mysql.sock');
 } else {
-	$mysqli = new mysqli($host, $user, $pass, $db);
+	$mysqli = new mysqli($host, $user, $pass2, $db);
 }
 
 if ($mysqli->connect_errno) {
