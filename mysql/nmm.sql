@@ -31,7 +31,7 @@ DELIMITER $$
 -- Procedures
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `move_piece` (`x1` TINYINT, `y1` TINYINT)  BEGIN
-	declare  p_color char;
+	declare  p_color char; 
 	
 	select  piece_color into  p_color FROM `board` WHERE X=x1 AND Y=y1;
 	
@@ -40,7 +40,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `move_piece` (`x1` TINYINT, `y1` TIN
     END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `move_piece2` (`x1` TINYINT, `y1` TINYINT, `x2` TINYINT, `y2` TINYINT)  BEGIN
-	declare  p_color char;
+	declare  p_color char; 
 	
 	select  piece_color into p_color FROM `board` WHERE X=x1 AND Y=y1;
 	
