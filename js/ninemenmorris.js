@@ -141,9 +141,7 @@ function update_status(data) {
     me.piece_color != null &&
     game_status.status != 'ended'
   ) {
-    //if($('#removepawn').is(':visible')){
-    //	;
-    //}else{
+    
     x = 0;
     // do play
     if (game_stat_old.p_turn != game_status.p_turn) {
@@ -251,17 +249,7 @@ function addmove() {
     alert('Must give 3 numbers');
     return;
   }
-  //me.playerNumber += 1;
-  //var im;
-  //var id = '#square_'+ a[0] +'_' + a[1];
-  //if (a[2] == 'B') {
-  //	 im ='<img class="piece" src="images/K.png">';
-  //	me.playerNumber += 1;
-  //} else if (a[2] == 'W') {
-  //	 im ='<img class="piece" src="images/K.png">';
-  //	me.playerNumber += 1;
-  //}
-  //$(id).addClass(me.Bcolor+'_square').html(im);
+  
   var p_color = $('#pcolor').val();
   if (p_color != a[2]) {
     alert('Wrong Color');
@@ -434,28 +422,7 @@ function move_result(data) {
     varobj.bone16(varobj);
   }
 
-  /*var a = 1;
-	var b = 1;
-	var c = 7;
-	var e = 7;
-	for(i=a;i<=c;i++){
-		var n = 0;
-		var k = 0;
-		for(j=b;j<=e;j++){
-			var d = document.getElementById('square_'+i+'_'+j);
-			if(d.childNodes[0].classList.contains('W')){
-				n += 1;
-			}else if(d.childNodes[0].classList.contains('B')){
-				k += 1;
-			}
-			if(k == 3 ){
-				alert('asdasd');
-			}else if(n == 3){
-				alert('asdasd');
-			}
-		}
-	}
-	*/
+ 
 }
 
 function One1_14_17(varobj) {
@@ -960,13 +927,7 @@ function removesuccess(data) {
   var x = data['a'];
   var y = data['b'];
   $('#removepawn').hide(1000);
-  //	if(p_color == 'W'){
-  //$('#move_div').show(1000);
-  //		checktriangles(varobj, x, y);
-  //	}else if(p_color == 'B'){
-  //$('#move_div').show(1000);
-  //		checkbtriangles(varobj, x, y);
-  //	}
+
   checkWtriangles(varobj);
 
   var pcol;
